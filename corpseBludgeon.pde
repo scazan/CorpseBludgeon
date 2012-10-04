@@ -50,7 +50,7 @@ class HWInterface {
   }
   
   void trigger(int systemFrameCount) {
-    println(numClicks);
+    // println(numClicks);
     
     if(systemFrameCount - lastSystemFrameCount < 5) {
         mainController.triggerAction(numClicks);
@@ -69,7 +69,7 @@ class HWInterface {
 
 // MAIN CONTROLLER ///////////////////////////////////////////////////////////////////////////////////////////
 class GameController {
-  int scorePerLevel = 3000;
+  int scorePerLevel = 10000;
   int currentLevel = 0;
   int currentFrame = 0;
   PFont scoreFont;
@@ -96,17 +96,18 @@ class GameController {
     currentLevel = (score / scorePerLevel);
 
     if(currentLevel <= levels.length-1) {
-      levels[currentLevel].draw(currentFrame);  
+      levels[currentLevel].draw(currentFrame);   
 
       if(currentLevel > previousLevel) {
         if(currentLevel < levels.length-1) {
           levels[currentLevel + 1].init();
+          if(currentLevel > 0) {levels[currentLevel-1].destroy();}
         }
       }
       
       // Display score
       textFont(scoreFont);
-      fill(80, 80, 80, 220);
+      fill(225, 0, 0, 220);
       textLeading(50);
       text(score, 50, 50);
     } 
@@ -184,7 +185,7 @@ class BloodSplatter extends ActionResponse {
        if(fadeValue > 0) {
          tint(brightness, ((fadeValue/fadeDuration) *255));
          image(splatterFrames[randomFrame], xPos, yPos, squareSize, squareSize);
-         
+        
          fadeValue--;
        }
        else {
@@ -340,26 +341,38 @@ abstract class Level {
 
   void init() {
   }
+
+  void destroy() {
+
+  }
 }
 
 class Opening extends Level {
+  boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
   PImage bgImage;
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Reflex.aif"};
 
   Opening() {
     //don't load anything until the time comes.
   }
 
   void init() {
+    //Need to get this looping
+    // backgroundMusic = new AudioCollection(musicFiles);
     bgImage = loadImage("grunge.jpg");
     splatterController = new BloodSplatterController();
     comboController = new ComboBreakerController();
   }
 
   void draw(int currentFrame) {
+    
+    // if(firstDraw) { backgroundMusic.play(0); firstDraw = false;}
+
     tint(bgColor[0],bgColor[1],bgColor[2], 255);
     image(bgImage, 0, 0, width, height);
     
@@ -375,29 +388,39 @@ class Opening extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 100;
+    score += 1459;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
+
+  void destroy() {
+    // backgroundMusic.destroy();
+  }
 
 }
 
 class LevelTwo extends Level {
+  boolean firstDraw = true;
   int[] bgColor = {255,255,255};
   PImage bgImage;
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Reflex.aif"};
 
   LevelTwo() {
     //don't load anything until the time comes.
   }
 
   void init() {
+    backgroundMusic = new AudioCollection(musicFiles);
+
     bgImage = loadImage("clouds.jpg");
     splatterController = new BloodSplatterController();
     comboController = new ComboBreakerController();
   }
 
   void draw(int currentFrame) {
+    if(firstDraw) { backgroundMusic.play(0); firstDraw = false;}
     // background(currentFrame%1 * 255);
     background(200 * (currentFrame%2));
     // tint(currentFrame%1, currentFrame%1, currentFrame%1, 255);
@@ -412,6 +435,11 @@ class LevelTwo extends Level {
     score += 100;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
+
+  void destroy() {
+    println("destroying");
+    backgroundMusic.destroy();
+  }
 }
 
 class LevelThree extends Level {
@@ -420,7 +448,7 @@ class LevelThree extends Level {
   int[] bgColor = {255,255,255};
   PImage bgImage;
   int bgScrollOffset = 0;
-  int bgScrollSpeed = 5;
+  int bgScrollSpeed = 15;
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
 
@@ -482,5 +510,11 @@ class AudioCollection {
     //   player.close();
     // }
     samples[sampleNumber].trigger();
+  }
+
+  void destroy() {
+    for(int i=0; i<samples.length; i++) {
+      samples[i].close();
+    }
   }
 }
