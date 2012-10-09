@@ -1,11 +1,5 @@
-//Audio
-import ddf.minim.*;
-import ddf.minim.signals.*;
-import ddf.minim.analysis.*;
-import ddf.minim.effects.*;
 //Graphics
 import processing.opengl.*;
-import processing.video.*;
 
 GameController mainController;
 HWInterface gameInterface;

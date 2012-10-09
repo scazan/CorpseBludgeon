@@ -1,22 +1,22 @@
 // HW INTERFACE ///////////////////////////////////////////////////////////////////////////////////////////
 class HWInterface {
   int lastSystemFrameCount = 0;
-  int numClicks = 0;
+  int numHits = 0;
 
   HWInterface() {
     
   }
   
   void trigger(int systemFrameCount) {
-    // println(numClicks);
+    // println(numHits);
     
     if(systemFrameCount - lastSystemFrameCount < 5) {
-        mainController.triggerAction(numClicks);
-        numClicks++;
+        mainController.triggerAction(numHits);
+        numHits++;
     }
     else {
-      numClicks = 1;
-      mainController.triggerAction(numClicks);
+      numHits = 1;
+      mainController.triggerAction(numHits);
         
     }
     
