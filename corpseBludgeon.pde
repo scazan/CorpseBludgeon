@@ -5,6 +5,7 @@ import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
 //Graphics
 import processing.opengl.*;
+import processing.video.*;
 
 GameController mainController;
 HWInterface gameInterface;
@@ -169,13 +170,13 @@ class BloodSplatter extends ActionResponse {
       
       // AUDIO HAPPENS IMMEDIATELY AND ONCE
       // The use of index numbers here implies tight coupling with the Controller class :(
-      responseAudio.play(0);
+      responseAudio.play(0,false);
       if(random(0,3) < 1) {
         if(random(0,3) < 1) {
-          responseAudio.play(1);
+          responseAudio.play(1,false);
         }
         else {
-          responseAudio.play(2);
+          responseAudio.play(2,false);
         }
       }
 
@@ -298,7 +299,7 @@ class BloodSplatterController extends ActionResponseController {
     super();
 
     String[] sampleFiles = {"coin.wav", "squash.wav", "squash2.wav"};
-    responseAudio = new AudioCollection(sampleFiles);
+    responseAudio = new AudioCollection(sampleFiles, false);
 
     File dataDir = new File(sketchPath + "/data/blood/");
     splatterFiles = dataDir.list();
@@ -345,6 +346,33 @@ abstract class Level {
   void destroy() {
 
   }
+}
+
+class MainMenu extends Level {
+  boolean firstDraw = true;
+  int[] bgColor = {50,50,50};
+  PImage bgImage;
+
+  MainMenu() {
+    //don't load anything until the time comes.
+  }
+
+  void init() {
+  }
+
+  void draw(int currentFrame) {
+          
+    
+  } // end draw()
+
+  void triggerAction(int numHits) {
+
+  } //end triggerAction()
+
+  void destroy() {
+    // backgroundMusic.destroy();
+  }
+
 }
 
 class Opening extends Level {
@@ -412,7 +440,7 @@ class LevelTwo extends Level {
   }
 
   void init() {
-    backgroundMusic = new AudioCollection(musicFiles);
+    backgroundMusic = new AudioCollection(musicFiles, true);
 
     bgImage = loadImage("clouds.jpg");
     splatterController = new BloodSplatterController();
@@ -420,7 +448,7 @@ class LevelTwo extends Level {
   }
 
   void draw(int currentFrame) {
-    if(firstDraw) { backgroundMusic.play(0); firstDraw = false;}
+    if(firstDraw) { backgroundMusic.play(0, true); firstDraw = false;}
     // background(currentFrame%1 * 255);
     background(200 * (currentFrame%2));
     // tint(currentFrame%1, currentFrame%1, currentFrame%1, 255);
@@ -494,22 +522,40 @@ class LevelThree extends Level {
 // SOUND ///////////////////////////////////////////////////////////////////////////////////////////
 class AudioCollection {
   Minim minim;
-  AudioSample[] samples;
+  AudioSource[] samples;
+  boolean loop;
   
-  AudioCollection(String sampleArray[]) {
+  AudioCollection(String sampleArray[], boolean looping) {
     minim = new  Minim ( root );
-    samples = new AudioSample[sampleArray.length];
+    loop = looping;
 
-    for(int i=0;i<sampleArray.length;i++){
-      samples[i] = minim.loadSample(sketchPath + "/data/sound/" + sampleArray[i] );
+    if(loop) {
+      samples = new AudioPlayer[sampleArray.length];  
+    } else {
+      samples = new AudioSample[sampleArray.length];
+    }
+
+    if(loop) {
+      for(int i=0;i<sampleArray.length;i++){
+        samples[i] = minim.loadFile(sketchPath + "/data/sound/" + sampleArray[i] );
+      }
+    } else {
+      for(int i=0;i<sampleArray.length;i++){
+        samples[i] = minim.loadSample(sketchPath + "/data/sound/" + sampleArray[i] );
+      }
     }
   }
 
-  void play(int sampleNumber) {
+  void play(int sampleNumber, boolean loop) {
     // if(player != null) {
     //   player.close();
     // }
-    samples[sampleNumber].trigger();
+    if(loop) {
+      ((AudioPlayer)samples[sampleNumber]).loop();
+    } else {
+      ((AudioSample)samples[sampleNumber]).trigger();  
+    }
+    
   }
 
   void destroy() {
