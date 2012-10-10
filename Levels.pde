@@ -1,4 +1,4 @@
-import processing.video.*;
+
 
 // LEVELS ///////////////////////////////////////////////////////////////////////////////////////////
 abstract class Level {
@@ -20,25 +20,52 @@ class MainMenu extends Level {
   boolean firstDraw = true;
   int[] bgColor = {50,50,50};
   PImage bgImage;
+  
+  GameController gameController;
+  PFont titleFont, subtitleFont;
+  int red = 0;
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Lascia.aiff"};
 
-  MainMenu() {
+  MainMenu(GameController controller) {
     //don't load anything until the time comes.
-  }
+    gameController = controller;
+    titleFont = loadFont("Lato.vlw");
+    subtitleFont = loadFont("LatoSmall.vlw");
+    backgroundMusic = new AudioCollection(musicFiles, true);
 
-  void init() {
   }
 
   void draw(int currentFrame) {
-          
+    if(firstDraw) { backgroundMusic.play(0, true); firstDraw = false;}
+
+    background(5);
+    textFont(titleFont);
+    textLeading(50);
+    fill(red + 80, 80, 80, 220);
+    text("CORPSE BLUDGEON", 48, (height/2)+2 );
+    fill(5);
+    text("CORPSE BLUDGEON", 50, height/2);
     
+    textFont(subtitleFont);
+    fill(red + 80, 80, 80, 220);
+    text("GET READY...", (width/2) -2, ((height/3) *2) + 2);
+    fill(5);
+    text("GET READY...", width/2, (height/3) *2);
+
+    red = (red + 1) % 255;
   } // end draw()
 
+  
   void triggerAction(int numHits) {
-
+    println(gameController.mainMenuActive);
+    gameController.mainMenuActive = false;
+    backgroundMusic.destroy();
+    firstDraw = true;
   } //end triggerAction()
 
   void destroy() {
-    // backgroundMusic.destroy();
+    
   }
 
 }
@@ -58,16 +85,17 @@ class Opening extends Level {
   }
 
   void init() {
-    //Need to get this looping
-    // backgroundMusic = new AudioCollection(musicFiles);
+    backgroundMusic = new AudioCollection(musicFiles, true);
     bgImage = loadImage("grunge.jpg");
     splatterController = new BloodSplatterController();
     comboController = new ComboBreakerController();
+
+    
   }
 
   void draw(int currentFrame) {
     
-    // if(firstDraw) { backgroundMusic.play(0); firstDraw = false;}
+    if(firstDraw) { backgroundMusic.play(0,true); firstDraw = false;}
 
     tint(bgColor[0],bgColor[1],bgColor[2], 255);
     image(bgImage, 0, 0, width, height);
@@ -80,6 +108,7 @@ class Opening extends Level {
     
     splatterController.draw();
     comboController.draw();
+
   } // end draw()
 
   void triggerAction(int numHits) {
@@ -89,7 +118,7 @@ class Opening extends Level {
   } //end triggerAction()
 
   void destroy() {
-    // backgroundMusic.destroy();
+    backgroundMusic.destroy();
   }
 
 }
