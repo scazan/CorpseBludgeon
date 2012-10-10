@@ -1,6 +1,7 @@
 // HW INTERFACE ///////////////////////////////////////////////////////////////////////////////////////////
 class HWInterface {
   int lastSystemFrameCount = 0;
+  int comboThreshold = 5;
   int numHits = 0;
 
   HWInterface() {
@@ -8,9 +9,10 @@ class HWInterface {
   }
   
   void trigger(int systemFrameCount) {
-    // println(numHits);
     
-    if(systemFrameCount - lastSystemFrameCount < 5) {
+    // SGC: Only qualify a number of hits that occurred within a specificied (comboThreshold) period (in frames)
+    // as being a "combo"
+    if(systemFrameCount - lastSystemFrameCount < comboThreshold) {
         mainController.triggerAction(numHits);
         numHits++;
     }
@@ -23,4 +25,10 @@ class HWInterface {
     lastSystemFrameCount = systemFrameCount;
     
   }
+
+  //HARDWARE CODE TO GO HERE. Should ultimately call the trigger method of this class whenever a hit occurs.
+
+
+
+  //////////////////////
 }
