@@ -26,9 +26,8 @@ class HWInterface {
     
   }
 
-  //HARDWARE CODE TO GO HERE. Should ultimately call the trigger method of this class whenever a hit occurs.
-
-
-
-  //////////////////////
 }
+
+
+//HARDWARE CODE should extend HWInterface. 
+// Should ultimately call the inherited trigger() method of itself whenever a hit occurs.
