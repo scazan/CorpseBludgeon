@@ -30,10 +30,11 @@ class MainMenu extends Level {
   MainMenu(GameController controller) {
     //don't load anything until the time comes.
     gameController = controller;
+
     titleFont = loadFont("Lato.vlw");
     subtitleFont = loadFont("LatoSmall.vlw");
-    backgroundMusic = new AudioCollection(musicFiles, true);
 
+    backgroundMusic = new AudioCollection(musicFiles, true);
   }
 
   void draw(int currentFrame) {

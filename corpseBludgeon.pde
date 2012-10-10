@@ -12,7 +12,7 @@ void setup() {
 
   root = this;
 
-  size(1440, 900, P3D);
+  size(1440, 900, OPENGL);
   if (frame != null) {
     frame.setResizable(true);
   }
