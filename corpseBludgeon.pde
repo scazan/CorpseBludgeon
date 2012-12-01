@@ -6,13 +6,15 @@ GameController mainController;
 HWInterface gameInterface;
 PApplet root;
 int score = 0;
+long timeStarted = 0;
+long timePlayed = 0;
 
 // MAIN GAME LOOP ///////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
 
   root = this;
 
-  size(1440, 900, OPENGL);
+  size(1024, 768, OPENGL);
   if (frame != null) {
     frame.setResizable(true);
   }
@@ -57,15 +59,19 @@ class GameController {
     mainMenu = new MainMenu(controller);
     //not elegant but efficient
     //Define the progression of levels and what objects handle them
-    levels = new Level[3];
-    levels[0] = new Opening();
-    // levels[0] = new MainMenu();
-    levels[1] = new LevelTwo();
-    levels[2] = new LevelThree();
+    levels = new Level[6];
+    levels[0] = new ZombieLevel();
+    levels[1] = new SpinningBatLevel();
+    levels[2] = new ConcreteLevel();
+    levels[3] = new FlashingLevel();
+    levels[4] = new GraveYardLevel();
+    levels[5] = new ZombieLevel();
 
     //default opening level and the next level initialized or fast loading
     levels[0].init();
     levels[1].init();
+
+    timeStarted = System.currentTimeMillis();
   }
   
   void draw() {
@@ -76,7 +82,9 @@ class GameController {
 
       int previousLevel = currentLevel;
       
-      currentLevel = (score / scorePerLevel);
+      int proposedLevel = score / scorePerLevel;
+
+      currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
 
       if(currentLevel <= levels.length-1) {
         levels[currentLevel].draw(currentFrame);   
@@ -93,6 +101,11 @@ class GameController {
         fill(225, 0, 0, 220);
         textLeading(50);
         text(score, 50, 50);
+        timePlayed = (System.currentTimeMillis() - timeStarted) / 1000;
+        DecimalFormat twoPlaces = new DecimalFormat("0.00");
+
+        text(twoPlaces.format(timePlayed), 50, 100);
+        
       } 
       else {
         // Display score
