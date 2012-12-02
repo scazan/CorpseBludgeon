@@ -43,20 +43,6 @@ class MainMenu extends Level {
 
     background(5);
     image(bgImage, 0, 0, width, height);
-    // textFont(titleFont);
-    // textLeading(50);
-    // fill(red + 80, 80, 80, 220);
-    // text("CORPSE BLUDGEON", 48, (height/4) * 3 +2 );
-    // fill(5);
-    // text("CORPSE BLUDGEON", 50, (height/4) * 3);
-    
-    // textFont(subtitleFont);
-    // fill(red + 80, 80, 80, 220);
-    // text("GET READY...", (width/2) -2, ((height/5) *4) + 2);
-    // fill(5);
-    // text("GET READY...", width/2, (height/5) *4);
-
-    // red = (red + 1) % 255;
   } // end draw()
 
   
@@ -291,11 +277,12 @@ class ZombieLevel extends Level {
 class SpinningBatLevel extends Level {
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
-  PImage[] bgImage = new PImage[3];
+  PImage[] bgImage = new PImage[2];
   int bgScrollOffset = 0;
   int bgScrollSpeed = 15;
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
+  BabySpriteController babySpriteController;
   float rotation = 0;
   float currentImage = 0;
 
@@ -306,16 +293,17 @@ class SpinningBatLevel extends Level {
   void init() {
     bgImage[0] = loadImage("tvman.jpg");
     bgImage[1] = loadImage("seabug.jpg");
-    bgImage[2] = loadImage("velocity.jpg");
+    // bgImage[2] = loadImage("velocity.jpg");
     
     splatterController = new BloodSplatterController();
     comboController = new ComboBreakerController();
+    babySpriteController = new BabySpriteController();
   }
 
   void draw(int currentFrame) {
-    // tint(bgColor[0],bgColor[1],bgColor[2], 255);
+    tint(bgColor[0],bgColor[1],bgColor[2], 255);
 
-    currentImage = (currentImage + 0.5) % (bgImage.length -1);
+    currentImage = (currentImage + 0.25) % (bgImage.length -1);
     // image(bgImage, bgScrollOffset, 0, width, height);
     // pushMatrix();
 
@@ -327,7 +315,8 @@ class SpinningBatLevel extends Level {
       
     
     // popMatrix();
-    image(bgImage[(int)Math.round(currentImage)], 0, 0, width, height);
+    image(bgImage[(int)Math.round(currentImage)], bgScrollOffset, random(0,10), width, height);
+    image(bgImage[(int)Math.round(currentImage)], bgScrollOffset+width, random(0,10), width, height);
     
     // if(currentFrame%strobeFrameRate == 0) {
     //   bgColor[0] = (int)random(150);
@@ -337,17 +326,19 @@ class SpinningBatLevel extends Level {
     
     splatterController.draw();
     comboController.draw();
+    babySpriteController.draw();
 
-    // bgScrollOffset = bgScrollOffset - bgScrollSpeed;
-    // if(bgScrollOffset <= (width * -1)) {
-    //   bgScrollOffset = 0;
-    // }
+    bgScrollOffset = bgScrollOffset - bgScrollSpeed;
+    if(bgScrollOffset <= (width * -1)) {
+      bgScrollOffset = 0;
+    }
   } // end draw()
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
     score += 100;
     comboController.newResponse(numHits) ;
+    babySpriteController.newResponse();
   } //end triggerAction()
 
   void destroy() {

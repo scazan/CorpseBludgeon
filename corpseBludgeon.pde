@@ -14,7 +14,7 @@ void setup() {
 
   root = this;
 
-  size(1024, 768, OPENGL);
+  size(1440, 900, OPENGL);
   if (frame != null) {
     frame.setResizable(true);
   }
@@ -45,6 +45,7 @@ class GameController {
   int currentLevel = 0;
   int currentFrame = 0;
   PFont scoreFont;
+  int scoreDeceleration = 1;
 
   Level mainMenu;
   boolean mainMenuActive = true;
@@ -117,7 +118,8 @@ class GameController {
       }
       
       // Score slowly goes down if the player is not hitting
-      score = (currentFrame%25) == 0 ? (score <= 0 ? 0 : score-1) : score ;
+      scoreDeceleration = currentLevel;
+      score = (currentFrame%25) == 0 ? (score <= 0 ? 0 : score-scoreDeceleration) : score ;
     }
 
     currentFrame++;

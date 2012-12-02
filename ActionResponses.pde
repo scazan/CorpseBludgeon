@@ -1,3 +1,5 @@
+import sprites.*;
+
 // ACTIONRESPONSE CLASSES ///////////////////////////////////////////////////////////////////////////////////////////
 // Various effects displayed in the game. Basically ViewControllers. 
 // Instantiated and aggregated from the ActionResponseController factories.
@@ -57,7 +59,6 @@ class BloodSplatter extends ActionResponse {
          display = false;
        }
    }
- 
 }
 
 class ComboBreaker extends ActionResponse {
@@ -126,6 +127,65 @@ class ComboBreaker extends ActionResponse {
   }
 }
 
+
+class BabySprite extends ActionResponse {
+    PImage babySprite; 
+  // Sprite babySprite; 
+    int randomFrame = 0;
+    int squareSize = 100;
+    int numFrames = 2;
+    int currentFrame = 1;
+   
+   BabySprite(PImage sprite) {
+    // BabySprite(Sprite sprite) {
+      xPos = (int)random(width);
+      yPos = (int)random(height);
+      fadeDuration = 120;
+      fadeValue = fadeDuration;
+      
+      babySprite = sprite; 
+      // babySprite.setXY(xPos, yPos);
+      // squareSize = (int)random(200,width/2);
+      brightness = (int)random(150,255);
+   } 
+   
+   void draw() {
+
+      // babySprite.draw();
+      PImage imageFrame = babySprite.get(currentFrame * (squareSize - 1), 0, squareSize -1, squareSize-1); 
+    // PImage imageFrame = createImage(squareSize, squareSize, RGB);
+
+    // PImage imageFrame = ;
+      // //  BEtter WAY FOR SPRITES
+      // babySprite.loadPixels();
+      // imageFrame.loadPixels();
+      
+      // for (int i = 0; i < squareSize; i++) { 
+      //   // int pixelToSwap = babySprite.pixels[i];
+      //   // babySprite.pixels[i] = babySprite.pixels[i+(squareSize-1)];
+      //   // babySprite.pixels[i+(squareSize-1)] = pixelToSwap;
+      //   imageFrame.pixels[i] = babySprite.pixels[i+(currentFrame * (squareSize - 1) )];
+      // } 
+
+      // imageFrame.updatePixels();
+
+
+      if(fadeValue > 0) {
+        tint(brightness, ((fadeValue/fadeDuration) *255));
+        image(imageFrame, xPos, yPos, squareSize, squareSize);
+        // image(babySprite, xPos, yPos, squareSize, squareSize);
+        
+        fadeValue--;
+      }
+      else {
+       display = false;
+      }
+
+      currentFrame = (currentFrame + 1) % 2;
+   }
+}
+
+
 // ActionResponse Controllers 
 abstract class ActionResponseController {
   ArrayList actionResponses;
@@ -192,6 +252,26 @@ class ComboBreakerController extends ActionResponseController {
     if(numHits >2)
     { 
       actionResponses.add( new ComboBreaker(numHits) );
+    }
+  }
+}
+
+class BabySpriteController extends ActionResponseController {
+  PImage sprite;
+  String spriteFileName = "phrenology.png";
+  // Sprite babySprite;
+
+  BabySpriteController() {
+    super();
+    sprite = loadImage(sketchPath + "/data/sprites/" + spriteFileName);
+    // babySprite = new Sprite(root, sketchPath + "/data/sprites/" + spriteFileName, 2, 1, 0);
+  }
+
+  void newResponse() {
+    for(int i=0; i<3;i++)
+    {
+      actionResponses.add( new BabySprite(sprite) );
+      // actionResponses.add( new BabySprite(babySprite) );
     }
   }
 }
