@@ -65,7 +65,7 @@ class ComboBreaker extends ActionResponse {
   PFont font;
   int comboNumber = 0;
  
-  ComboBreaker(int numHits) {  
+  ComboBreaker(int numHits, AudioCollection responseAudio) {  
     xPos = (int)random(10,width/2);
     yPos = (int)random(50, height/2);
      
@@ -76,6 +76,16 @@ class ComboBreaker extends ActionResponse {
     fadeValue = fadeDuration;
       
     comboNumber = numHits;
+
+    responseAudio.play(0,false);
+      // if(random(0,3) < 1) {
+      //   if(random(0,3) < 1) {
+      //     responseAudio.play(1,false);
+      //   }
+      //   else {
+      //     responseAudio.play(2,false);
+      //   }
+      // }
   }
  
   void draw() {
@@ -140,40 +150,19 @@ class BabySprite extends ActionResponse {
     // BabySprite(Sprite sprite) {
       xPos = (int)random(width);
       yPos = (int)random(height);
-      fadeDuration = 120;
+      fadeDuration = 50;
       fadeValue = fadeDuration;
       
-      babySprite = sprite; 
-      // babySprite.setXY(xPos, yPos);
-      // squareSize = (int)random(200,width/2);
+      babySprite = sprite;
       brightness = (int)random(150,255);
    } 
    
    void draw() {
-
-      // babySprite.draw();
       PImage imageFrame = babySprite.get(currentFrame * (squareSize - 1), 0, squareSize -1, squareSize-1); 
-    // PImage imageFrame = createImage(squareSize, squareSize, RGB);
-
-    // PImage imageFrame = ;
-      // //  BEtter WAY FOR SPRITES
-      // babySprite.loadPixels();
-      // imageFrame.loadPixels();
-      
-      // for (int i = 0; i < squareSize; i++) { 
-      //   // int pixelToSwap = babySprite.pixels[i];
-      //   // babySprite.pixels[i] = babySprite.pixels[i+(squareSize-1)];
-      //   // babySprite.pixels[i+(squareSize-1)] = pixelToSwap;
-      //   imageFrame.pixels[i] = babySprite.pixels[i+(currentFrame * (squareSize - 1) )];
-      // } 
-
-      // imageFrame.updatePixels();
-
 
       if(fadeValue > 0) {
         tint(brightness, ((fadeValue/fadeDuration) *255));
-        image(imageFrame, xPos, yPos, squareSize, squareSize);
-        // image(babySprite, xPos, yPos, squareSize, squareSize);
+        image(imageFrame, xPos, yPos, squareSize*random(1,4), squareSize*random(1,4));
         
         fadeValue--;
       }
@@ -246,12 +235,15 @@ class ComboBreakerController extends ActionResponseController {
 
   ComboBreakerController() {
     super();
+
+    String[] sampleFiles = {"combo.wav"};
+    responseAudio = new AudioCollection(sampleFiles, false);
   }
 
   void newResponse(int numHits) {
     if(numHits >2)
     { 
-      actionResponses.add( new ComboBreaker(numHits) );
+      actionResponses.add( new ComboBreaker(numHits, responseAudio) );
     }
   }
 }
@@ -264,14 +256,12 @@ class BabySpriteController extends ActionResponseController {
   BabySpriteController() {
     super();
     sprite = loadImage(sketchPath + "/data/sprites/" + spriteFileName);
-    // babySprite = new Sprite(root, sketchPath + "/data/sprites/" + spriteFileName, 2, 1, 0);
   }
 
   void newResponse() {
     for(int i=0; i<3;i++)
     {
       actionResponses.add( new BabySprite(sprite) );
-      // actionResponses.add( new BabySprite(babySprite) );
     }
   }
 }

@@ -59,6 +59,49 @@ class MainMenu extends Level {
 
 }
 
+class GameOver extends Level {
+  boolean firstDraw = true;
+  int[] bgColor = {50,50,50};
+  PImage bgImage;
+  
+  GameController gameController;
+  PFont titleFont, subtitleFont;
+  int red = 0;
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Lascia.aiff"};
+
+  GameOver(GameController controller) {
+    //don't load anything until the time comes.
+    gameController = controller;
+
+    titleFont = loadFont("Lato.vlw");
+    subtitleFont = loadFont("LatoSmall.vlw");
+
+    backgroundMusic = new AudioCollection(musicFiles, true);
+    bgImage = loadImage("gameover.gif");
+  }
+
+  void draw(int score) {
+    if(firstDraw) { backgroundMusic.play(0, true); firstDraw = false;}
+
+    background(5);
+    image(bgImage, 0, 0, width, height);
+  } // end draw()
+
+  
+  void triggerAction(int numHits) {
+    // println(gameController.mainMenuActive);
+    gameController.mainMenuActive = true;
+    backgroundMusic.destroy();
+    firstDraw = true;
+  } //end triggerAction()
+
+  void destroy() {
+    println("destroying");
+  }
+
+}
+
 class ConcreteLevel extends Level {
   boolean firstDraw = true;
   int strobeFrameRate = 3;
@@ -100,7 +143,7 @@ class ConcreteLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 1459;
+    score += 1000;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -149,7 +192,7 @@ class FlashingLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 100;
+    score += 1000;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -206,7 +249,7 @@ class GraveYardLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 100;
+    score += 1000;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -220,6 +263,7 @@ class GraveYardLevel extends Level {
 }
 
 class ZombieLevel extends Level {
+  boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
   PImage bgImage;
@@ -228,18 +272,22 @@ class ZombieLevel extends Level {
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
 
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Reflex.aif"};
+
   ZombieLevel() {
     //don't load anything until the time comes.
   }
 
   void init() {
     bgImage = loadImage("fetidzombie.jpg");
-    
+    backgroundMusic = new AudioCollection(musicFiles, true);
     splatterController = new BloodSplatterController();
     comboController = new ComboBreakerController();
   }
 
   void draw(int currentFrame) {
+    if(firstDraw) { backgroundMusic.play(0,true); firstDraw = false;}
     tint(bgColor[0],bgColor[1],bgColor[2], 255);
     image(bgImage, bgScrollOffset, 0, width, height);
     image(bgImage, width+bgScrollOffset, 0, width, height);
@@ -261,12 +309,14 @@ class ZombieLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 5000;
+    score += 1000;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
   void destroy() {
     println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
     bgImage = null;
     splatterController = null;
     comboController = null;
@@ -275,11 +325,16 @@ class ZombieLevel extends Level {
 
 
 class SpinningBatLevel extends Level {
+  boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
   PImage[] bgImage = new PImage[2];
   int bgScrollOffset = 0;
   int bgScrollSpeed = 15;
+
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Reflex.aif"};
+
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
   BabySpriteController babySpriteController;
@@ -291,8 +346,9 @@ class SpinningBatLevel extends Level {
   }
 
   void init() {
-    bgImage[0] = loadImage("tvman.jpg");
-    bgImage[1] = loadImage("seabug.jpg");
+    backgroundMusic = new AudioCollection(musicFiles, true);
+    bgImage[0] = loadImage("tvman.gif");
+    bgImage[1] = loadImage("seabug.gif");
     // bgImage[2] = loadImage("velocity.jpg");
     
     splatterController = new BloodSplatterController();
@@ -301,48 +357,37 @@ class SpinningBatLevel extends Level {
   }
 
   void draw(int currentFrame) {
+    if(firstDraw) { backgroundMusic.play(0,true); firstDraw = false;}
+
     tint(bgColor[0],bgColor[1],bgColor[2], 255);
 
     currentImage = (currentImage + 0.25) % (bgImage.length -1);
-    // image(bgImage, bgScrollOffset, 0, width, height);
-    // pushMatrix();
-
-    //   rotation = rotation + 0.3 % TWO_PI;
-    //   imageMode(CENTER);
-    //   translate(width/2, height/2);
-    //   rotate(rotation);
-    // image(bgImage[Math.round(currentImage)], width+bgScrollOffset, 0, width, height);
+  
+    int imageToShow = (int)Math.round(currentImage);
+    image(bgImage[imageToShow], bgScrollOffset, random(0,10), bgImage[imageToShow].width, bgImage[imageToShow].height);
+    image(bgImage[imageToShow], bgScrollOffset+bgImage[imageToShow].width, random(0,10), bgImage[imageToShow].width, bgImage[imageToShow].height);
       
-    
-    // popMatrix();
-    image(bgImage[(int)Math.round(currentImage)], bgScrollOffset, random(0,10), width, height);
-    image(bgImage[(int)Math.round(currentImage)], bgScrollOffset+width, random(0,10), width, height);
-    
-    // if(currentFrame%strobeFrameRate == 0) {
-    //   bgColor[0] = (int)random(150);
-    //   bgColor[1] = (int)random(255);
-    //   bgColor[2] = (int)random(255);
-    // }
-    
     splatterController.draw();
     comboController.draw();
     babySpriteController.draw();
 
     bgScrollOffset = bgScrollOffset - bgScrollSpeed;
-    if(bgScrollOffset <= (width * -1)) {
+    if(bgScrollOffset <= (bgImage[imageToShow].width * -1)) {
       bgScrollOffset = 0;
     }
   } // end draw()
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 100;
+    score += 1000;
     comboController.newResponse(numHits) ;
     babySpriteController.newResponse();
   } //end triggerAction()
 
   void destroy() {
     println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
     bgImage = null;
     splatterController = null;
     comboController = null;

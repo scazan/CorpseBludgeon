@@ -14,7 +14,7 @@ void setup() {
 
   root = this;
 
-  size(1440, 900, OPENGL);
+  size(1280, 768, OPENGL);
   if (frame != null) {
     frame.setResizable(true);
   }
@@ -47,7 +47,7 @@ class GameController {
   PFont scoreFont;
   int scoreDeceleration = 1;
 
-  Level mainMenu;
+  Level mainMenu, gameOver;
   boolean mainMenuActive = true;
   Level[] levels;
 
@@ -58,6 +58,7 @@ class GameController {
     scoreFont = loadFont("Cracked-64.vlw");
 
     mainMenu = new MainMenu(controller);
+    gameOver  = new GameOver(controller);
     //not elegant but efficient
     //Define the progression of levels and what objects handle them
     levels = new Level[6];
@@ -110,11 +111,12 @@ class GameController {
       } 
       else {
         // Display score
-        background(0);
-        textFont(scoreFont);
-        fill(80, 80, 80, 220);
-        textLeading(50);
-        text("GAME OVER", width/2, height/2);
+        // background(0);
+        // textFont(scoreFont);
+        // fill(80, 80, 80, 220);
+        // textLeading(50);
+        // text("GAME OVER", width/2, height/2);
+        gameOver.draw(score);
       }
       
       // Score slowly goes down if the player is not hitting
