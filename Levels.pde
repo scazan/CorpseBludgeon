@@ -94,6 +94,7 @@ class GameOver extends Level {
     gameController.mainMenuActive = true;
     backgroundMusic.destroy();
     firstDraw = true;
+    println("triggered");
   } //end triggerAction()
 
   void destroy() {

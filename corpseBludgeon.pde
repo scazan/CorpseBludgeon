@@ -14,7 +14,7 @@ void setup() {
 
   root = this;
 
-  size(1280, 768, OPENGL);
+  size(1024, 768, OPENGL);
   if (frame != null) {
     frame.setResizable(true);
   }
@@ -48,7 +48,8 @@ class GameController {
   int scoreDeceleration = 1;
 
   Level mainMenu, gameOver;
-  boolean mainMenuActive = true;
+  boolean mainMenuActive = true,
+    gameOverMenuActive = false;
   Level[] levels;
 
   public GameController controller;
@@ -112,11 +113,14 @@ class GameController {
       else {
         // Display score
         // background(0);
-        // textFont(scoreFont);
-        // fill(80, 80, 80, 220);
-        // textLeading(50);
-        // text("GAME OVER", width/2, height/2);
+        
+        gameOverMenuActive = true;
+        // levels[levels.length-1].destroy();
         gameOver.draw(score);
+        textFont(scoreFont);
+        fill(0, 0, 0, 220);
+        textLeading(50);
+        text(score, width/2, (height/3)*2);
       }
       
       // Score slowly goes down if the player is not hitting
@@ -128,13 +132,29 @@ class GameController {
   }
   
   void triggerAction(int numHits) {
+    
     if(currentLevel <= levels.length-1) {
       if(mainMenuActive) {
         mainMenu.triggerAction(numHits);
-      } else {
+      }
+
+      else {
         levels[currentLevel].triggerAction(numHits);
       }
     }
+    else if(gameOverMenuActive) {
+        println(gameOverMenuActive + ", " + mainMenuActive);
+        // mainMenu = new MainMenu(controller);
+        score = 0;
+        gameOver.destroy();
+        // gameOver.triggerAction(0);
+        gameOverMenuActive = false;
+        score = 0;
+        timeStarted = 0;
+        timePlayed = 0;
+        mainController = new GameController();
+      }
+     
   }
   
 }
