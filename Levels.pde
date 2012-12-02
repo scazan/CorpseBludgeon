@@ -99,6 +99,7 @@ class GameOver extends Level {
 
   void destroy() {
     println("destroying");
+    backgroundMusic.destroy();
   }
 
 }

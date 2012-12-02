@@ -115,7 +115,7 @@ class GameController {
         // background(0);
         
         gameOverMenuActive = true;
-        // levels[levels.length-1].destroy();
+        levels[levels.length-1].destroy();
         gameOver.draw(score);
         textFont(scoreFont);
         fill(0, 0, 0, 220);
