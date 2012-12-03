@@ -35,7 +35,7 @@ class XBeeInterface extends HWInterface {
   OscP5 oscP5;
   NetAddress myRemoteLocation;
 
-  XBeeInterface {
+  XBeeInterface() {
     // all of your setup() stuff goes here
     oscP5 = new OscP5(root, 12000);
     myRemoteLocation = new NetAddress("127.0.0.1", 12000);

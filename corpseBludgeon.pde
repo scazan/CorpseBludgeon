@@ -1,3 +1,7 @@
+//for HWInterface
+import oscP5.*;
+import netP5.*;
+
 //Graphics
 import processing.opengl.*;
 import processing.video.*;
