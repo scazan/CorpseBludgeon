@@ -479,7 +479,7 @@ class FireLevel extends Level {
 
 
 
-class SpiderLevel extends Level {
+class SkullLevel extends Level {
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -499,7 +499,7 @@ class SpiderLevel extends Level {
 
   int alpha = 255;
 
-  SpiderLevel() {
+  SkullLevel() {
     //don't load anything until the time comes.
   }
 

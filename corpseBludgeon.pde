@@ -74,7 +74,7 @@ class GameController {
     // levels[0] = new ZombieLevel();
     // levels[0] = new FireLevel();
     levels[0] = new ConcreteLevel();
-    levels[1] = new SpiderLevel();
+    levels[1] = new SkullLevel();
     levels[2] = new FlashingLevel();
     levels[3] = new SpinningBatLevel();
     levels[4] = new FlashingLevel();
