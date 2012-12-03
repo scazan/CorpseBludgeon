@@ -35,7 +35,7 @@ class XBeeInterface extends HWInterface {
   OscP5 oscP5;
   NetAddress myRemoteLocation;
 
-  myNewClass {
+  XBeeInterface {
     // all of your setup() stuff goes here
     oscP5 = new OscP5(this, 12000);
     myRemoteLocation = new NetAddress("127.0.0.1", 12000);
@@ -45,7 +45,7 @@ class XBeeInterface extends HWInterface {
     int firstValue = theOscMessage.get(0).intValue();
     int secondValue = theOscMessage.get(1).intValue();
     int thirdValue = theOscMessage.get(2).intValue();
-
-    this.trigger(frameCount);
+    
+    //this.trigger(frameCount);
   }
 }
