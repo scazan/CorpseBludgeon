@@ -41,7 +41,7 @@ class XBeeInterface extends HWInterface {
     myRemoteLocation = new NetAddress("127.0.0.1", 12000);
   }
 
-  void oscEvent(OscMessage theOscMessage) {
+  public void oscEvent(OscMessage theOscMessage) {
     int firstValue = theOscMessage.get(0).intValue();
     int secondValue = theOscMessage.get(1).intValue();
     int thirdValue = theOscMessage.get(2).intValue();
