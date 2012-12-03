@@ -7,7 +7,7 @@ import processing.opengl.*;
 import processing.video.*;
 
 GameController mainController;
-HWInterface gameInterface;
+XBeeInterface gameInterface;
 PApplet root;
 int score = 0;
 long timeStarted = 0;
