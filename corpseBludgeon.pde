@@ -9,7 +9,7 @@ import processing.video.*;
 GameController mainController;
 XBeeInterface gameInterface;
 PApplet root;
-int score = 0;
+int score = 10;
 long timeStarted = 0;
 long timePlayed = 0;
 
@@ -49,11 +49,11 @@ void movieEvent(Movie m) {
 
 // MAIN CONTROLLER ///////////////////////////////////////////////////////////////////////////////////////////
 class GameController {
-  int scorePerLevel = 10000;
+  int scorePerLevel = 5000000;
   int currentLevel = 0;
   int currentFrame = 0;
   PFont scoreFont;
-  int scoreDeceleration = 1;
+  int scoreDeceleration = 1000;
 
   Level mainMenu, gameOver;
   boolean mainMenuActive = true,
@@ -70,13 +70,16 @@ class GameController {
     gameOver  = new GameOver(controller);
     //not elegant but efficient
     //Define the progression of levels and what objects handle them
-    levels = new Level[6];
-    levels[0] = new ZombieLevel();
-    levels[1] = new SpinningBatLevel();
-    levels[2] = new ConcreteLevel();
-    levels[3] = new FlashingLevel();
-    levels[4] = new GraveYardLevel();
-    levels[5] = new ZombieLevel();
+    levels = new Level[7];
+    // levels[0] = new ZombieLevel();
+    // levels[0] = new FireLevel();
+    levels[0] = new ConcreteLevel();
+    levels[1] = new SpiderLevel();
+    levels[2] = new FlashingLevel();
+    levels[3] = new SpinningBatLevel();
+    levels[4] = new FlashingLevel();
+    levels[5] = new GraveYardLevel();
+    levels[6] = new ZombieLevel();
 
     //default opening level and the next level initialized or fast loading
     levels[0].init();
@@ -97,13 +100,16 @@ class GameController {
 
       currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
 
-      if(currentLevel <= levels.length-1) {
+      if((currentLevel <= levels.length-1)) {
         levels[currentLevel].draw(currentFrame);   
 
         if(currentLevel > previousLevel) {
           if(currentLevel < levels.length-1) {
             levels[currentLevel + 1].init();
-            if(currentLevel > 0) {levels[currentLevel-1].destroy();}
+            if(currentLevel > 0) {
+              levels[currentLevel-1].destroy();
+              levels[currentLevel-1] = null;
+            }
           }
         }
         
@@ -111,11 +117,14 @@ class GameController {
         textFont(scoreFont);
         fill(225, 0, 0, 220);
         textLeading(50);
-        text(score, 50, 50);
+        float scoreScaleJitter = random(0.05);
+        scale(2.5 + scoreScaleJitter);
+        text(score + "!!!!!!", 10, 50);
+        scale(1/(2.5+scoreScaleJitter));
         timePlayed = (System.currentTimeMillis() - timeStarted) / 1000;
         DecimalFormat twoPlaces = new DecimalFormat("0.00");
 
-        text(twoPlaces.format(timePlayed), 50, 100);
+        text(twoPlaces.format(timePlayed), 50, height-50);
         
       } 
       else {
@@ -123,7 +132,13 @@ class GameController {
         // background(0);
         
         gameOverMenuActive = true;
-        levels[levels.length-1].destroy();
+        try{
+          levels[levels.length-1].destroy();
+          levels[levels.length-1] = null;
+        } catch(Exception e) {
+
+        }
+        
         gameOver.draw(score);
         textFont(scoreFont);
         fill(0, 0, 0, 220);
@@ -132,8 +147,8 @@ class GameController {
       }
       
       // Score slowly goes down if the player is not hitting
-      scoreDeceleration = currentLevel;
-      score = (currentFrame%25) == 0 ? (score <= 0 ? 0 : score-scoreDeceleration) : score ;
+      scoreDeceleration = (int)Math.pow(currentLevel+1, 5);
+      score = (currentFrame%12) == 0 ? (score <= 0 ? 0 : score-scoreDeceleration) : score ;
     }
 
     currentFrame++;
