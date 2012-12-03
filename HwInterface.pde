@@ -5,27 +5,23 @@ class HWInterface {
   int numHits = 0;
 
   HWInterface() {
-    
   }
-  
+
   void trigger(int systemFrameCount) {
-    
+
     // SGC: Only qualify a number of hits that occurred within a specificied (comboThreshold) period (in frames)
     // as being a "combo"
-    if(systemFrameCount - lastSystemFrameCount < comboThreshold) {
-        mainController.triggerAction(numHits);
-        numHits++;
+    if (systemFrameCount - lastSystemFrameCount < comboThreshold) {
+      mainController.triggerAction(numHits);
+      numHits++;
     }
     else {
       numHits = 1;
       mainController.triggerAction(numHits);
-        
     }
-    
-    lastSystemFrameCount = systemFrameCount;
-    
-  }
 
+    lastSystemFrameCount = systemFrameCount;
+  }
 }
 
 
@@ -45,7 +41,12 @@ class XBeeInterface extends HWInterface {
     int firstValue = theOscMessage.get(0).intValue();
     int secondValue = theOscMessage.get(1).intValue();
     int thirdValue = theOscMessage.get(2).intValue();
-    
-    //this.trigger(frameCount);
+
+    //println( "port 1 is " + str(firstValue) + " port 2 is " + str(secondValue) + " port 3 is " + str(thirdValue) );
+    if ( secondValue <= 450 ) {
+      this.trigger(frameCount);
+      //println( "A HIT!!!!!!" );
+    }
   }
 }
+
