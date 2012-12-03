@@ -2,11 +2,11 @@
 CorpseBludgeon Interface
 by Casey Anderson
 
-Continuously read the serial port and process IO data received from a remote XBee.
+Read the serial port and process IO data received from a remote XBee.
 XBee transmits information from 3-axis acceleromter on adc-0, adc-1, and adc-2.
 Sends info to Processing via OSC
 
-the python-xbee package is here: http://code.google.com/p/python-xbee/
+python-xbee package is here: http://code.google.com/p/python-xbee/
 
 Usage: Connect local XBee, turn remote XBee on, run the listener in Processing, then run this to send
 """
