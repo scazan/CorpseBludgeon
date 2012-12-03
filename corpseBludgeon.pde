@@ -21,7 +21,7 @@ void setup() {
   frameRate(30);
   
   mainController = new GameController();
-  gameInterface = new HWInterface();
+  gameInterface = new XBeeInterface();
 
 }
 
