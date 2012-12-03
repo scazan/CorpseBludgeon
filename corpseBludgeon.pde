@@ -34,6 +34,10 @@ void mouseClicked() {
     gameInterface.trigger(frameCount);
 }
 
+void oscEvent(OscMessage theOscMessage) {
+  gameInterface.oscEvent(theOscMessage);
+}
+
 // For using videos in Levels
 void movieEvent(Movie m) {
     m.read();
