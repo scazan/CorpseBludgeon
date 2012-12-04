@@ -30,6 +30,7 @@ class HWInterface {
 class XBeeInterface extends HWInterface {
   OscP5 oscP5;
   NetAddress myRemoteLocation;
+  int prevValue = 500;
 
   XBeeInterface() {
     // all of your setup() stuff goes here
@@ -41,12 +42,16 @@ class XBeeInterface extends HWInterface {
     int firstValue = theOscMessage.get(0).intValue();
     int secondValue = theOscMessage.get(1).intValue();
     int thirdValue = theOscMessage.get(2).intValue();
-
+    
     //println( "port 1 is " + str(firstValue) + " port 2 is " + str(secondValue) + " port 3 is " + str(thirdValue) );
-    if ( secondValue <= 450 ) {
+    println("firstValue: " + firstValue);    
+    if ( ( firstValue - prevValue ) >= 75 && firstValue > 550 ) {
+      println( "DIFF: " + str( firstValue - prevValue ) + " >> " + firstValue + ", " + prevValue);
       this.trigger(frameCount);
-      //println( "A HIT!!!!!!" );
+      //      this.trigger(frameCount);
+      println( "A HIT!!!!!!" );
     }
+    prevValue = firstValue;
   }
 }
 

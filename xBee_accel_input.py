@@ -9,6 +9,9 @@ Sends info to Processing via OSC
 python-xbee package is here: http://code.google.com/p/python-xbee/
 
 Usage: Connect local XBee, turn remote XBee on, run the listener in Processing, then run this to send
+
+TODO: write all of this data to a text file in the directory, run analytics later
+In the future: create a nice way to collect data, build out some sort of data viz thing following analysis
 """
 
 from xbee import XBee
