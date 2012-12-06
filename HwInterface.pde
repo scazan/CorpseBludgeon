@@ -1,7 +1,7 @@
 // HW INTERFACE ///////////////////////////////////////////////////////////////////////////////////////////
 class HWInterface {
   int lastSystemFrameCount = 0;
-  int comboThreshold = 2;
+  int comboThreshold = 12;
   int numHits = 0;
 
   HWInterface() {

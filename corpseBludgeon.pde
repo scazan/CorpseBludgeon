@@ -49,7 +49,7 @@ void movieEvent(Movie m) {
 
 // MAIN CONTROLLER ///////////////////////////////////////////////////////////////////////////////////////////
 class GameController {
-  int scorePerLevel = 5000000;
+  int scorePerLevel = 5000;
   int currentLevel = 0;
   int currentFrame = 0;
   PFont scoreFont;

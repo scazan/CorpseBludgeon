@@ -145,7 +145,7 @@ class ConcreteLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359261;
+    score += 359;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -194,7 +194,7 @@ class FlashingLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359261;
+    score += 359;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -256,7 +256,7 @@ class GraveYardLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 159261;
+    score += 159;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -318,7 +318,7 @@ class ZombieLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 159261;
+    score += 159;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -388,7 +388,7 @@ class SpinningBatLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359261;
+    score += 359;
     comboController.newResponse(numHits) ;
     babySpriteController.newResponse();
   } //end triggerAction()
@@ -465,7 +465,7 @@ class FireLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359261;
+    score += 359;
     comboController.newResponse(numHits);
 
     for(int i=0; i<spriteControllers.length; i++) {
@@ -553,7 +553,7 @@ class SkullLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359261;
+    score += 359;
     comboController.newResponse(numHits);
 
     for(int i=0; i<spriteControllers.length; i++) {
@@ -640,7 +640,7 @@ class WiresLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359261;
+    score += 359;
     comboController.newResponse(numHits);
 
     for(int i=0; i<spriteControllers.length; i++) {
@@ -694,7 +694,7 @@ class BlackLevel extends Level {
     }
 
     if(currentFrame - startingFrame >= (numSecondsToShow * 30)) {
-      score += 5000000;
+      score += 5000;
     }
 
 
@@ -746,7 +746,7 @@ class BieberLevel extends Level {
     }
 
     if(currentFrame - startingFrame >= (numSecondsToShow * 30)) {
-      score += 5000000;
+      score += 5000;
     }
 
 
