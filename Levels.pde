@@ -712,3 +712,55 @@ class BlackLevel extends Level {
     score -= 5000000;
   }
 }
+
+class BieberLevel extends Level {
+  boolean firstDraw = true;
+  int[] bgColor = {0,0,0};
+  int alpha = 255;
+  int startingFrame = 0;
+  int numSecondsToShow = 10;
+
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Bieber.mp3"};
+
+  BloodSplatterController splatterController;
+  
+  BieberLevel() {
+    //don't load anything until the time comes.
+  }
+
+  void init() {
+    backgroundMusic = new AudioCollection(musicFiles, true);
+    
+    splatterController = new BloodSplatterController();
+  }
+
+  void draw(int currentFrame) {
+    tint(255, alpha);
+    background(0);
+
+    if(firstDraw) { 
+      startingFrame = currentFrame;
+      backgroundMusic.play(0,true); 
+      firstDraw = false;
+    }
+
+    if(currentFrame - startingFrame >= (numSecondsToShow * 30)) {
+      score += 5000000;
+    }
+
+
+  } // end draw()
+
+  void triggerAction(int numHits) {
+    splatterController.newResponse();
+  } //end triggerAction()
+
+  void destroy() {
+    println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
+    splatterController = null;
+    score -= 5000000;
+  }
+}
