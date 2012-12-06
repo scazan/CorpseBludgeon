@@ -170,6 +170,7 @@ class Sprite extends ActionResponse {
     int numFrames = 4;
     float currentFrame = 1;
     float speed = 0.25;
+    float imageScale = 1;
    
    Sprite(PImage passedSprite, int spriteSize, int spriteFrames) {
       xPos = (int)random(width);
@@ -181,13 +182,39 @@ class Sprite extends ActionResponse {
 
       sprite = passedSprite;
       brightness = (int)random(150,255);
+      imageScale = random(1,3);
    } 
    
    void draw() {
     PImage imageFrame = sprite.get(Math.round(currentFrame) * (squareSize - 1), 0, squareSize -1, squareSize-1); 
 
     if(fadeValue > 0) {
-      float imageScale = random(1,3);
+      tint(brightness, ((fadeValue/fadeDuration) *255));
+      scale(imageScale);
+      image(imageFrame, xPos, yPos, squareSize, squareSize);
+      scale(1/imageScale);
+      
+      fadeValue--;
+    }
+    else {
+     display = false;
+    }
+
+      currentFrame = (currentFrame + speed) % 2;
+   }
+}
+
+class WobblingSprite extends Sprite {
+   
+   WobblingSprite(PImage passedSprite, int spriteSize, int spriteFrames) {
+    super(passedSprite, spriteSize, spriteFrames);
+   } 
+   
+   void draw() {
+    PImage imageFrame = sprite.get(Math.round(currentFrame) * (squareSize - 1), 0, squareSize -1, squareSize-1); 
+
+    if(fadeValue > 0) {
+      imageScale = random(1,3);
       tint(brightness, ((fadeValue/fadeDuration) *255));
       scale(imageScale);
       image(imageFrame, xPos, yPos, squareSize, squareSize);
@@ -311,6 +338,28 @@ abstract class SpriteController extends ActionResponseController {
     for(int i=0; i<3;i++)
     {
       actionResponses.add( new Sprite(sprite, squareSize, numFrames) );
+    }
+  }
+}
+
+abstract class WobblingSpriteController extends ActionResponseController {
+  PImage sprite;
+  String spriteFileName = "skullSpin.png";
+  int squareSize = 100;
+  int numFrames = 1;
+
+  WobblingSpriteController() {
+    super();
+  }
+
+  void init() {
+    sprite = loadImage(sketchPath + "/data/sprites/" + spriteFileName);
+  }
+
+  void newResponse() {
+    for(int i=0; i<3;i++)
+    {
+      actionResponses.add( new WobblingSprite(sprite, squareSize, numFrames) );
     }
   }
 }

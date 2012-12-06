@@ -209,12 +209,15 @@ class FlashingLevel extends Level {
 }
 
 class GraveYardLevel extends Level {
-
+  boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
   PImage bgImage;
   int bgScrollOffset = 0;
   int bgScrollSpeed = 15;
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Behold.mp3"};
+
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
 
@@ -223,6 +226,7 @@ class GraveYardLevel extends Level {
   }
 
   void init() {
+    backgroundMusic = new AudioCollection(musicFiles, true);
     bgImage = loadImage("warishell.jpg");
     // bgImage = loadImage("hell.jpg");
     splatterController = new BloodSplatterController();
@@ -230,6 +234,7 @@ class GraveYardLevel extends Level {
   }
 
   void draw(int currentFrame) {
+    if(firstDraw) { backgroundMusic.play(0, true); firstDraw = false;}
     tint(bgColor[0],bgColor[1],bgColor[2], 255);
     image(bgImage, bgScrollOffset, 0, width, height);
     image(bgImage, width+bgScrollOffset, 0, width, height);
@@ -257,6 +262,8 @@ class GraveYardLevel extends Level {
 
   void destroy() {
     println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
     bgImage = null;
     splatterController = null;
     comboController = null;
@@ -563,5 +570,145 @@ class SkullLevel extends Level {
     splatterController = null;
     comboController = null;
 
+  }
+}
+
+
+// WIRES!!
+class WiresLevel extends Level {
+  boolean firstDraw = true;
+  int strobeFrameRate = 3;
+  int[] bgColor = {255,255,255};
+  PImage[] bgImage = new PImage[2];
+  int bgScrollOffset = 0;
+  int bgScrollSpeed = 0;
+
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"Necromaniac.mp3"};
+
+  BloodSplatterController splatterController;
+  ComboBreakerController comboController;
+  SpriteController[] spriteControllers = new SpriteController[2];
+
+  float rotation = 0;
+  float currentImage = 0;
+
+  int alpha = 255;
+
+  WiresLevel() {
+    //don't load anything until the time comes.
+  }
+
+  void init() {
+    backgroundMusic = new AudioCollection(musicFiles, true);
+    bgImage[0] = loadImage("wirenest1.jpg");
+    bgImage[1] = loadImage("wirenest2.jpg");
+    
+    comboController = new ComboBreakerController();
+    splatterController = new BloodSplatterController();
+    
+    spriteControllers[0] = new SpiderSpriteController();
+    spriteControllers[1] = new FlashingSkullSpriteController();
+  }
+
+  void draw(int currentFrame) {
+    if(firstDraw) { backgroundMusic.play(0,true); firstDraw = false;}
+
+    tint(255, alpha);
+
+
+
+    currentImage = (currentImage + 0.15) % (bgImage.length -1);
+
+    int imageToShow = (int)Math.round(currentImage);
+
+    image(bgImage[imageToShow], bgScrollOffset, random(0,10), bgImage[imageToShow].width, bgImage[imageToShow].height);
+    image(bgImage[imageToShow], bgScrollOffset+bgImage[imageToShow].width, random(0,50), bgImage[imageToShow].width, bgImage[imageToShow].height);
+      
+    splatterController.draw();
+    comboController.draw();
+
+    for(int i=0; i<spriteControllers.length; i++) {
+      spriteControllers[i].draw();
+    }
+
+    bgScrollOffset = bgScrollOffset - bgScrollSpeed;
+    if(bgScrollOffset <= (bgImage[imageToShow].width * -1)) {
+      bgScrollOffset = 0;
+    }
+  } // end draw()
+
+  void triggerAction(int numHits) {
+    splatterController.newResponse();
+    score += 159261;
+    comboController.newResponse(numHits);
+
+    for(int i=0; i<spriteControllers.length; i++) {
+      spriteControllers[i].newResponse();
+    }
+    
+  } //end triggerAction()
+
+  void destroy() {
+    println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
+    bgImage = null;
+    splatterController = null;
+    comboController = null;
+
+  }
+}
+
+
+class BlackLevel extends Level {
+  boolean firstDraw = true;
+  int[] bgColor = {0,0,0};
+  int alpha = 255;
+  int startingFrame = 0;
+  int numSecondsToShow = 2;
+
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"TotallyFuckingDead.mp3"};
+
+  BloodSplatterController splatterController;
+  
+  BlackLevel() {
+    //don't load anything until the time comes.
+  }
+
+  void init() {
+    backgroundMusic = new AudioCollection(musicFiles, true);
+    
+    splatterController = new BloodSplatterController();
+  }
+
+  void draw(int currentFrame) {
+    tint(255, alpha);
+    background(0);
+
+    if(firstDraw) { 
+      startingFrame = currentFrame;
+      backgroundMusic.play(0,true); 
+      firstDraw = false;
+    }
+
+    if(currentFrame - startingFrame >= (numSecondsToShow * 30)) {
+      score += 5000000;
+    }
+
+
+  } // end draw()
+
+  void triggerAction(int numHits) {
+    splatterController.newResponse();
+  } //end triggerAction()
+
+  void destroy() {
+    println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
+    splatterController = null;
+    score -= 5000000;
   }
 }

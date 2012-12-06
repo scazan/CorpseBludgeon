@@ -70,16 +70,18 @@ class GameController {
     gameOver  = new GameOver(controller);
     //not elegant but efficient
     //Define the progression of levels and what objects handle them
-    levels = new Level[7];
+    levels = new Level[9];
     // levels[0] = new ZombieLevel();
     // levels[0] = new FireLevel();
     levels[0] = new ConcreteLevel();
     levels[1] = new SkullLevel();
-    levels[2] = new FlashingLevel();
-    levels[3] = new SpinningBatLevel();
+    levels[2] = new WiresLevel();
+    levels[3] = new BlackLevel();
     levels[4] = new FlashingLevel();
-    levels[5] = new GraveYardLevel();
-    levels[6] = new ZombieLevel();
+    levels[5] = new SpinningBatLevel();
+    levels[6] = new FlashingLevel();
+    levels[7] = new GraveYardLevel();
+    levels[8] = new ZombieLevel();
 
     //default opening level and the next level initialized or fast loading
     levels[0].init();
@@ -107,6 +109,7 @@ class GameController {
           if(currentLevel < levels.length-1) {
             levels[currentLevel + 1].init();
             if(currentLevel > 0) {
+              println("destroying: " + currentLevel);
               levels[currentLevel-1].destroy();
               levels[currentLevel-1] = null;
             }
