@@ -12,6 +12,7 @@ PApplet root;
 int score = 10;
 long timeStarted = 0;
 long timePlayed = 0;
+int largestScore = 0;
 
 // MAIN GAME LOOP ///////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
@@ -118,20 +119,43 @@ class GameController {
         }
         
         // Display score
+
         textFont(scoreFont);
         fill(225, 0, 0, 220);
         textLeading(50);
         float scoreScaleJitter = random(0.05);
-        scale(2.5 + scoreScaleJitter);
-        text(score + "!!!!!!", 10, 50);
-        scale(1/(2.5+scoreScaleJitter));
+        scale(1.5 + scoreScaleJitter);
+        
+
+
+        int numExclamations = floor((score/1050)) * 2;
+        
+        for(int i=1; i<=numExclamations; i++) {
+          println(i);
+          text("|", 10 + (i*15), 50);
+          // text("!", 10, 50);
+        }
+
+        fill(100,0,255,220);
+        numExclamations = floor((largestScore/1050)) * 2;
+        text("|", 10 + (numExclamations*15), 50);
+
+        largestScore = score > largestScore ? score : largestScore;
+        textAlign(LEFT);
+        text(largestScore, 30 + (numExclamations*15), 50 + scoreScaleJitter);
+        
+        scale(1/(1.5+scoreScaleJitter));
+
+        fill(255, 0, 0, 220);
+
+        // TIME DISPLAY
         timePlayed = (System.currentTimeMillis() - timeStarted) / 1000;
         
         println(  String.valueOf( (System.currentTimeMillis() - timeStarted) / 1000L ) );
         
         DecimalFormat twoPlaces = new DecimalFormat("0.00");
 
-        text(twoPlaces.format(timePlayed), 50, height-50);
+        text(twoPlaces.format(timePlayed), width - 100, height-50);
         
       } 
       else {
@@ -154,7 +178,7 @@ class GameController {
       }
       
       // Score slowly goes down if the player is not hitting
-      scoreDeceleration = (int)Math.pow(currentLevel+1, 5);
+      scoreDeceleration = (int)Math.pow(timePlayed, 1.75);
       score = (currentFrame%12) == 0 ? (score <= 0 ? 0 : score-scoreDeceleration) : score ;
     }
 
