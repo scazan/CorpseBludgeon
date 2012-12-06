@@ -75,10 +75,10 @@ class GameController {
     // levels[0] = new FireLevel();
     levels[0] = new ConcreteLevel();
     levels[1] = new SkullLevel();
-    levels[2] = new BieberLevel();
-    levels[3] = new WiresLevel();
-    levels[4] = new BlackLevel();
-    levels[5] = new FlashingLevel();
+    levels[2] = new WiresLevel();
+    levels[3] = new BlackLevel();
+    levels[4] = new FlashingLevel();
+    levels[5] = new BieberLevel();
     levels[6] = new SpinningBatLevel();
     levels[7] = new FlashingLevel();
     levels[8] = new GraveYardLevel();
@@ -126,6 +126,9 @@ class GameController {
         text(score + "!!!!!!", 10, 50);
         scale(1/(2.5+scoreScaleJitter));
         timePlayed = (System.currentTimeMillis() - timeStarted) / 1000;
+        
+        println(  String.valueOf( (System.currentTimeMillis() - timeStarted) / 1000L ) );
+        
         DecimalFormat twoPlaces = new DecimalFormat("0.00");
 
         text(twoPlaces.format(timePlayed), 50, height-50);
@@ -163,6 +166,7 @@ class GameController {
     if(currentLevel <= levels.length-1) {
       if(mainMenuActive) {
         mainMenu.triggerAction(numHits);
+        timeStarted = System.currentTimeMillis();
       }
 
       else {

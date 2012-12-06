@@ -718,7 +718,7 @@ class BieberLevel extends Level {
   int[] bgColor = {0,0,0};
   int alpha = 255;
   int startingFrame = 0;
-  int numSecondsToShow = 10;
+  int numSecondsToShow = 14;
 
   AudioCollection backgroundMusic;
   String[] musicFiles = {"Bieber.mp3"};
