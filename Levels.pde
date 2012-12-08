@@ -742,7 +742,7 @@ class BlackLevel extends Level {
     backgroundMusic.destroy();
     backgroundMusic = null;
     splatterController = null;
-    score -= 5000000;
+    score -= gameController.scorePerLevel;
   }
 }
 
@@ -887,3 +887,6 @@ class GlitchLevel extends Level {
     comboController = null;
   }
 }
+
+
+

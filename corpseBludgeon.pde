@@ -10,8 +10,8 @@ GameController mainController;
 XBeeInterface gameInterface;
 PApplet root;
 int score = 10;
-long timeStarted = 0;
-long timePlayed = 0;
+Long timeStarted;
+float timePlayed = 0.0;
 int largestScore = 0;
 
 // MAIN GAME LOOP ///////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ class GameController {
   int currentLevel = 0;
   int currentFrame = 0;
   PFont scoreFont;
-  int scoreDeceleration = 1000;
+  int scoreDeceleration = 800;
 
   Level mainMenu, gameOver;
   boolean mainMenuActive = true,
@@ -99,7 +99,8 @@ class GameController {
     levels[0].init();
     levels[1].init();
 
-    timeStarted = System.currentTimeMillis();
+
+    timeStarted = new Long(System.currentTimeMillis());
   }
   
   void draw() {
@@ -114,8 +115,7 @@ class GameController {
 
       currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
 
-      if((currentLevel <= levels.length-1) ) {
-       // && score > 0) {
+      if((currentLevel <= levels.length-1) && score > 0) {
         levels[currentLevel].draw(currentFrame);   
 
         if(currentLevel > previousLevel) {
@@ -130,15 +130,25 @@ class GameController {
         }
         
         // Display score
-
         textFont(scoreFont);
         fill(225, 0, 0, 220);
         textLeading(50);
         float scoreScaleJitter = random(0.05);
         scale(1.5 + scoreScaleJitter);
         
+        // float scaledScore = score / (scorePerLevel * 10) * 2; // scaled to two
+        // scaledScore = log(scaledScore) / log(10); // Set to a log10 curve
+        
+        // if(scaledScore < 2) {
+        //   scaledScore = 0;
+        // }
+        
+        // scaledScore += 2; // get into the positive range
+        // scaledScore = scaledScore / 3; // scale to one
 
-        int numExclamations = floor((score/1050)) * 2;
+        // println(scaledScore);
+
+        int numExclamations = floor( (score/1050) )  * 2;
         
         for(int i=1; i<=numExclamations; i++) {
           println(i);
@@ -158,35 +168,44 @@ class GameController {
 
         fill(255, 0, 0, 220);
 
-        // TIME DISPLAY
-        timePlayed = (System.currentTimeMillis() - timeStarted) / 1000;
-        
-        println(  String.valueOf( (System.currentTimeMillis() - timeStarted) / 1000L ) );
-        
-        DecimalFormat twoPlaces = new DecimalFormat("0.00");
+        Long timeMillis = new Long(System.currentTimeMillis());
 
-        text(twoPlaces.format(timePlayed), width - 100, height-50);
+        // TIME DISPLAY
+        timePlayed = (timeMillis.intValue() - timeStarted.intValue()) / 1000.0;
+        
+        Date date = new Date((timeMillis.intValue() - timeStarted.intValue()));
+        DateFormat formatter = new SimpleDateFormat("mm:ss:SSS");
+        String twoPlaces = formatter.format(date);
+
+        text(twoPlaces, 10, 125);
         
       } 
       else {
         // Display score
         // background(0);
-        
         gameOverMenuActive = true;
         
         try{
-          levels[levels.length-1].destroy();
-          levels[levels.length-1] = null;
+
+          for(int i=0; i<levels.length; i++) {
+            levels[i].destroy();  
+          }
+
+          levels = null;
+          
+          // levels[levels.length-1] = null;
+          // levels[currentLevel].destroy();
+          // levels[currentLevel+1].destroy();
           currentLevel = 1; 
         } catch(Exception e) {
-
+          println(e);
         }
         
         gameOver.draw(score);
         textFont(scoreFont);
         fill(0, 0, 0, 220);
         textLeading(50);
-        text(score, width/2, (height/3)*2);
+        text(largestScore, width/2, (height/3)*2);
       }
       
       // Score slowly goes down if the player is not hitting
@@ -199,26 +218,28 @@ class GameController {
   
   void triggerAction(int numHits) {
     
-    if(currentLevel <= levels.length-1) {
+    if(currentLevel <= levels.length-1 && !gameOverMenuActive) {
       if(mainMenuActive) {
         mainMenu.triggerAction(numHits);
-        timeStarted = System.currentTimeMillis();
+        timeStarted = new Long(System.currentTimeMillis());
       }
-
       else {
         levels[currentLevel].triggerAction(numHits);
       }
     }
     else if(gameOverMenuActive) {
-        println(gameOverMenuActive + ", " + mainMenuActive);
+        // println(gameOverMenuActive + ", " + mainMenuActive);
         // mainMenu = new MainMenu(controller);
         score = 0;
         gameOver.destroy();
         // gameOver.triggerAction(0);
         gameOverMenuActive = false;
         score = 0;
-        timeStarted = 0;
+        timeStarted = new Long(0L);
         timePlayed = 0;
+        score = 10;
+        largestScore = 0;
+
         mainController = new GameController();
       }
      
