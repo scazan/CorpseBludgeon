@@ -80,7 +80,7 @@ class GameOver extends Level {
 
     scoreFont = loadFont("Cracked-64.vlw");
     
-    titleFont = loadFont("Lato.vlw");
+    titleFont = loadFont("Lato-128.vlw");
     subtitleFont = loadFont("LatoSmall.vlw");
 
     backgroundMusic = new AudioCollection(musicFiles, true);
@@ -105,9 +105,16 @@ class GameOver extends Level {
     fill(150, 0, 0, -(currentFade - 255) );
     textLeading(50);
     textAlign(CENTER);
-    scale(2);
-    text(largestScore, width/4, (height/4));
-    scale(1/2);
+    // scale(2);
+    text(largestScore, width/2, (height/2));
+
+    // Long timeMillis = new Long(System.currentTimeMillis());
+    Date date = new Date((long)timePlayed * 1000);
+    DateFormat formatter = new SimpleDateFormat("mm:ss:SSS");
+    String twoPlaces = formatter.format(date);
+    
+    text(twoPlaces, width/2, (height/3) * 2);
+    // scale(1/2);
     textAlign(LEFT);
     currentFade--;
     

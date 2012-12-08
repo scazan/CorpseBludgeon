@@ -156,7 +156,7 @@ class GameController {
         int numExclamations = floor( (score/1050) )  * 2;
         
         for(int i=1; i<=numExclamations; i++) {
-          println(i);
+          // println(i);
           text("|", 10 + (i*15), 50);
           // text("!", 10, 50);
         }
@@ -203,16 +203,16 @@ class GameController {
           // levels[currentLevel+1].destroy();
           currentLevel = 1; 
         } catch(Exception e) {
-          println(e);
+          // println(e);
         }
         
         gameOver.draw(largestScore);
         
         // println("displaying");
-        textFont(scoreFont);
-        fill(0, 0, 0, 220);
-        textLeading(50);
-        text(largestScore, 20, (height/3)*1);
+        // textFont(scoreFont);
+        // fill(0, 0, 0, 220);
+        // textLeading(50);
+        // text(largestScore, 20, (height/3)*1);
       }
       
       // Score slowly goes down if the player is not hitting
@@ -261,7 +261,7 @@ class GameController {
 
   void triggerMouseEvent() {
     // if(currentLevel <= levels.length-1 && !gameOverMenuActive) {
-    println(mainMenuActive);
+    // println(mainMenuActive);
 
       if(mainMenuActive) {
         mainMenu.triggerAction(0);
@@ -296,7 +296,7 @@ class GameController {
           // levels[currentLevel+1].destroy();
           currentLevel = 1; 
         } catch(Exception e) {
-          println(e);
+          // println(e);
           levels = null;
         }
         tint(255,255);
