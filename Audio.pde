@@ -43,13 +43,27 @@ class AudioCollection {
     
   }
 
-  void destroy() {
+  void stop() {
     for(int i=0; i<samples.length; i++) {
-      samples[i].close();
+      // (AudioSample)samples[i].close();
+
+      if(loop) {
+        ((AudioPlayer)samples[i]).close();
+      } else {
+        ((AudioSample)samples[i]).close();
+      }
     }
-    
-    minim.stop();
     samples = null;
+
+    minim.stop();
     minim = null;
+  }
+
+  void destroy() {
+    this.stop();
+    
+    // minim.stop();
+    // samples = null;
+    // minim = null;
   }
 }

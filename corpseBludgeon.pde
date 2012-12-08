@@ -6,6 +6,7 @@ import netP5.*;
 import processing.opengl.*;
 import processing.video.*;
 
+
 GameController mainController;
 XBeeInterface gameInterface;
 PApplet root;
@@ -14,9 +15,9 @@ Long timeStarted;
 float timePlayed = 0.0;
 int largestScore = 0;
 
+
 // MAIN GAME LOOP ///////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
-
   root = this;
 
   size(1024, 768, OPENGL);
@@ -34,9 +35,9 @@ void draw() {
   mainController.draw();
 }
 
-// For Testing
 void mouseClicked() {
     gameInterface.trigger(frameCount);
+    // mainController.triggerMouseEvent();
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -69,23 +70,27 @@ class GameController {
 
     mainMenu = new MainMenu(controller);
     gameOver  = new GameOver(controller);
-    //not elegant but efficient
-    
-    // levels[0] = new ZombieLevel();
-    // levels[0] = new FireLevel();
 
     ArrayList<Level> levelOrder = new ArrayList<Level>();
-    levelOrder.add(new GlitchLevel(controller) );
+    
     levelOrder.add(new ConcreteLevel(controller) );
     levelOrder.add(new SkullLevel(controller) );
     levelOrder.add(new WiresLevel(controller) );
+    levelOrder.add(new GlitchLevel(controller) );
+    
     levelOrder.add(new BlackLevel(controller) );
     levelOrder.add(new FlashingLevel(controller) );
+    levelOrder.add(new FireLevel(controller) );
+    
     levelOrder.add(new BieberLevel(controller) );
     levelOrder.add(new SpinningBatLevel(controller) );
-    levelOrder.add(new FlashingLevel(controller) );
-    levelOrder.add(new GraveYardLevel(controller) );
+
     levelOrder.add(new ZombieLevel(controller) );
+    levelOrder.add(new GraveYardLevel(controller) );
+
+    levelOrder.add(new FlashingLevel(controller) );
+    
+    
 
 
     //Define the progression of levels and what objects handle them
@@ -107,6 +112,8 @@ class GameController {
 
     if(mainMenuActive) {
       mainMenu.draw(currentFrame);
+    } else if(gameOverMenuActive){
+      gameOver.draw(score);
     } else {
 
       int previousLevel = currentLevel;
@@ -209,7 +216,14 @@ class GameController {
       }
       
       // Score slowly goes down if the player is not hitting
-      scoreDeceleration = (int)Math.pow(timePlayed, 1.75);
+      if(currentLevel < 4) {
+        scoreDeceleration = (int)Math.pow(timePlayed, 1.5);  
+      } else if(currentLevel < 8) {
+        scoreDeceleration = (int)Math.pow(timePlayed, 1.75);  
+      } else {
+        scoreDeceleration = (int)Math.pow(timePlayed, 2);  
+      }
+      
       score = (currentFrame%12) == 0 ? (score <= 0 ? 0 : score-scoreDeceleration) : score ;
     }
 
@@ -228,8 +242,32 @@ class GameController {
       }
     }
     else if(gameOverMenuActive) {
-        // println(gameOverMenuActive + ", " + mainMenuActive);
-        // mainMenu = new MainMenu(controller);
+      // println(gameOverMenuActive + ", " + mainMenuActive);
+      // mainMenu = new MainMenu(controller);
+      score = 0;
+      gameOver.destroy();
+      // gameOver.triggerAction(0);
+      gameOverMenuActive = false;
+      score = 0;
+      timeStarted = new Long(0L);
+      timePlayed = 0;
+      score = 10;
+      largestScore = 0;
+
+      mainController = new GameController();
+    }
+     
+  }
+
+  void triggerMouseEvent() {
+    // if(currentLevel <= levels.length-1 && !gameOverMenuActive) {
+    println(mainMenuActive);
+
+      if(mainMenuActive) {
+        mainMenu.triggerAction(0);
+        timeStarted = new Long(System.currentTimeMillis());
+      }
+      else if(gameOverMenuActive) {
         score = 0;
         gameOver.destroy();
         // gameOver.triggerAction(0);
@@ -242,11 +280,37 @@ class GameController {
 
         mainController = new GameController();
       }
-     
+      else {
+        gameOverMenuActive = true;
+        
+        try{
+
+          for(int i=0; i<levels.length; i++) {
+            levels[i].destroy();  
+          }
+
+          levels = null;
+          
+          // levels[levels.length-1] = null;
+          // levels[currentLevel].destroy();
+          // levels[currentLevel+1].destroy();
+          currentLevel = 1; 
+        } catch(Exception e) {
+          println(e);
+          levels = null;
+        }
+        tint(255,255);
+
+        gameOver.draw(score);
+        textFont(scoreFont);
+        fill(0, 0, 0, 220);
+        textLeading(50);
+        text(largestScore, width/2, (height/3)*2);
+      }
+
   }
   
 }
-
 
 
 

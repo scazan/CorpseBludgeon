@@ -156,13 +156,13 @@ class ComboBreaker extends ActionResponse {
     message += "!!!!!!!";
     
     if(fadeValue > 0) {
-      PImage backImage = loadImage(sketchPath + "/data/psycho.gif");
+      PImage backImage = loadImage(sketchPath + "/data/psycho2.gif");
       tint(comboNumber * 50 %255, random(0,200), comboNumber * 25, ((fadeValue/fadeDuration) *200) );
       image(backImage, xPos+50, yPos-50);
       tint(255,255);
       fill(comboNumber * 50 %255, random(0,200), comboNumber * 25, ((fadeValue/fadeDuration) *255) );
       textLeading(50);
-      // text(message, xPos, yPos);
+      text(message, xPos, yPos);
 
       fadeValue--;
     }
@@ -245,7 +245,7 @@ class Sprite extends ActionResponse {
      display = false;
     }
 
-      currentFrame = (currentFrame + speed) % 2;
+      currentFrame = (currentFrame + speed) % (numFrames - 1);
    }
 }
 
@@ -415,6 +415,7 @@ abstract class SpriteController extends ActionResponseController {
   }
 }
 
+
 abstract class WobblingSpriteController extends ActionResponseController {
   PImage sprite;
   String spriteFileName = "skullSpin.png";
@@ -491,6 +492,31 @@ class SpiderSpriteController extends SpriteController {
   }
 }
 
+class IconsSpriteController extends SpriteController {
+  PImage[] spriteFileNames = new PImage[4];
+
+  IconsSpriteController() {
+    super();
+
+    // spriteFileName = "brainwave.png";
+    squareSize = 127;
+    numFrames = 1;
+
+    spriteFileNames[0] = loadImage(sketchPath + "/data/sprites/brainwave.png");
+    spriteFileNames[1] = loadImage(sketchPath + "/data/sprites/eyeguy.png");
+    spriteFileNames[2] = loadImage(sketchPath + "/data/sprites/humanupload.png");
+    spriteFileNames[3] = loadImage(sketchPath + "/data/sprites/deathletter.png");
+
+    init();
+  }
+
+  void newResponse() {
+    for(int i=0; i<3;i++)
+    {
+      actionResponses.add( new Sprite(spriteFileNames[(int)random(0,spriteFileNames.length - 1)], squareSize, numFrames) );
+    }
+  }
+}
 
 
 

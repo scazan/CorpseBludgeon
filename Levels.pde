@@ -2,7 +2,7 @@
 
 // LEVELS ///////////////////////////////////////////////////////////////////////////////////////////
 abstract class Level {
-  int numHitsThisLevel = 5;
+  int numHitsThisLevel = 8;
 
   void draw(int currentFrame) {
   }
@@ -178,6 +178,7 @@ class FlashingLevel extends Level {
 
   FlashingLevel(GameController controller) {
     gameController = controller;
+    numHitsThisLevel = 4;
     //don't load anything until the time comes.
   }
 
@@ -358,7 +359,7 @@ class SpinningBatLevel extends Level {
   int bgScrollSpeed = 15;
 
   AudioCollection backgroundMusic;
-  String[] musicFiles = {"limb.wav"};
+  String[] musicFiles = {"berzerker.mp3"};
 
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
@@ -432,7 +433,7 @@ class FireLevel extends Level {
   int bgScrollSpeed = 50;
 
   AudioCollection backgroundMusic;
-  String[] musicFiles = {"limb.wav"};
+  String[] musicFiles = {"Anaal.mp3"};
 
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
@@ -730,7 +731,6 @@ class BlackLevel extends Level {
       score += (gameController.scorePerLevel);
     }
 
-
   } // end draw()
 
   void triggerAction(int numHits) {
@@ -817,7 +817,7 @@ class GlitchLevel extends Level {
   AudioCollection backgroundMusic;
   String[] musicFiles = {"limb.wav"};
 
-  GlitchSplatterController splatterController;
+  BloodSplatterController splatterController;
   ComboBreakerController comboController;
   SpriteController[] spriteControllers = new SpriteController[2];
 
@@ -831,15 +831,16 @@ class GlitchLevel extends Level {
 
   void init() {
     backgroundMusic = new AudioCollection(musicFiles, true);
-    bgImage[0] = loadImage("fire1.jpg");
-    bgImage[1] = loadImage("fire2.jpg");
+    bgImage[0] = loadImage("cityburns.jpg");
+    bgImage[1] = loadImage("cityapocalypse.jpg");
     bgImage[2] = loadImage("fire3.jpg");
     
     comboController = new ComboBreakerController();
-    splatterController = new GlitchSplatterController();
+    splatterController = new BloodSplatterController();
     
     spriteControllers[0] = new SkullSpinSpriteController();
-    spriteControllers[1] = new FlashingSkullSpriteController();
+    // spriteControllers[1] = new FlashingSkullSpriteController();
+    spriteControllers[1] = new IconsSpriteController();
   }
 
   void draw(int currentFrame) {
