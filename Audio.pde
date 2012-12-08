@@ -36,9 +36,9 @@ class AudioCollection {
     //   player.close();
     // }
     if(loop) {
-      ((AudioPlayer)samples[sampleNumber]).loop();
+      // ((AudioPlayer)samples[sampleNumber]).loop();
     } else {
-      ((AudioSample)samples[sampleNumber]).trigger();  
+      // ((AudioSample)samples[sampleNumber]).trigger();  
     }
     
   }

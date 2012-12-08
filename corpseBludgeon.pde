@@ -89,8 +89,6 @@ class GameController {
     levelOrder.add(new GraveYardLevel(controller) );
 
     levelOrder.add(new FlashingLevel(controller) );
-    
-    
 
 
     //Define the progression of levels and what objects handle them
@@ -113,7 +111,7 @@ class GameController {
     if(mainMenuActive) {
       mainMenu.draw(currentFrame);
     } else if(gameOverMenuActive){
-      gameOver.draw(score);
+      gameOver.draw(largestScore);
     } else {
 
       int previousLevel = currentLevel;
@@ -129,7 +127,7 @@ class GameController {
           if(currentLevel < levels.length-1) {
             levels[currentLevel + 1].init();
             if(currentLevel > 0) {
-              println("destroying: " + currentLevel);
+              // println("destroying: " + currentLevel);
               levels[currentLevel-1].destroy();
               levels[currentLevel-1] = null;
             }
@@ -208,11 +206,13 @@ class GameController {
           println(e);
         }
         
-        gameOver.draw(score);
+        gameOver.draw(largestScore);
+        
+        // println("displaying");
         textFont(scoreFont);
         fill(0, 0, 0, 220);
         textLeading(50);
-        text(largestScore, width/2, (height/3)*2);
+        text(largestScore, 20, (height/3)*1);
       }
       
       // Score slowly goes down if the player is not hitting
@@ -301,11 +301,9 @@ class GameController {
         }
         tint(255,255);
 
-        gameOver.draw(score);
-        textFont(scoreFont);
-        fill(0, 0, 0, 220);
-        textLeading(50);
-        text(largestScore, width/2, (height/3)*2);
+        gameOver.draw(largestScore);
+        // println("hello");
+        
       }
 
   }

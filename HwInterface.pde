@@ -51,12 +51,12 @@ class XBeeInterface extends HWInterface {
     int thirdValue = theOscMessage.get(2).intValue();
 
     //println( "port 1 is " + str(firstValue) + " port 2 is " + str(secondValue) + " port 3 is " + str(thirdValue) );
-    println("firstValue: " + firstValue);    
+    // println("firstValue: " + firstValue);    
     if ( ( firstValue - prevValue ) >= 75 && firstValue > 550 ) {
-      println( "DIFF: " + str( firstValue - prevValue ) + " >> " + firstValue + ", " + prevValue);
+      // println( "DIFF: " + str( firstValue - prevValue ) + " >> " + firstValue + ", " + prevValue);
       this.trigger(frameCount);
       //      this.trigger(frameCount);
-      println( "A HIT!!!!!!" );
+      // println( "A HIT!!!!!!" );
     }
     prevValue = firstValue;
   }

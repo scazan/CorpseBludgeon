@@ -65,6 +65,8 @@ class GameOver extends Level {
   boolean firstDraw = true;
   int[] bgColor = {50,50,50};
   PImage bgImage;
+  PFont scoreFont;
+  int currentFade = 255;
   
   GameController gameController;
   PFont titleFont, subtitleFont;
@@ -76,6 +78,8 @@ class GameOver extends Level {
     //don't load anything until the time comes.
     gameController = controller;
 
+    scoreFont = loadFont("Cracked-64.vlw");
+    
     titleFont = loadFont("Lato.vlw");
     subtitleFont = loadFont("LatoSmall.vlw");
 
@@ -83,11 +87,32 @@ class GameOver extends Level {
     bgImage = loadImage("gameover.gif");
   }
 
-  void draw(int score) {
-    if(firstDraw) { backgroundMusic.play(0, true); firstDraw = false;}
+  void draw(int largestScore) {
+    if(firstDraw) { 
+      backgroundMusic.play(0, true); 
+      firstDraw = false;
+      currentFade = 255;
+    }
+
+    int endScore = largestScore;
 
     background(5);
+    tint(currentFade,255);
+
     image(bgImage, 0, 0, width, height);
+    textFont(titleFont);
+    tint(255,255);
+    fill(150, 0, 0, -(currentFade - 255) );
+    textLeading(50);
+    textAlign(CENTER);
+    scale(2);
+    text(largestScore, width/4, (height/4));
+    scale(1/2);
+    textAlign(LEFT);
+    currentFade--;
+    
+    currentFade = currentFade <= 0 ? 0: currentFade; 
+
   } // end draw()
 
   
@@ -96,11 +121,11 @@ class GameOver extends Level {
     gameController.mainMenuActive = true;
     backgroundMusic.destroy();
     firstDraw = true;
-    println("triggered");
+    // println("triggered");
   } //end triggerAction()
 
   void destroy() {
-    println("destroying");
+    // println("destroying");
     backgroundMusic.destroy();
   }
 
