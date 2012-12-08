@@ -1,3 +1,4 @@
+#!/opt/local/bin/ipython
 """
 CorpseBludgeon Interface
 by Casey Anderson
