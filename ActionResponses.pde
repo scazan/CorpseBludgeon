@@ -45,7 +45,51 @@ class BloodSplatter extends ActionResponse {
         }
       }
 
-   } 
+   }
+
+   void draw() {
+       if(fadeValue > 0) {
+         tint(brightness, ((fadeValue/fadeDuration) *255));
+         image(splatterFrames[randomFrame], xPos, yPos, squareSize, squareSize);
+        
+         fadeValue--;
+       }
+       else {
+         display = false;
+       }
+   }
+} 
+
+class GlitchSplatter extends ActionResponse {
+    PImage[] splatterFrames; 
+    int randomFrame = 0;
+    int squareSize = 100;
+   
+   GlitchSplatter(PImage[] frames, AudioCollection responseAudio) {
+      xPos = (int)random(width);
+      yPos = (int)random(height);
+      fadeDuration = 120;
+      fadeValue = fadeDuration;
+      
+      splatterFrames = frames; 
+      
+      randomFrame = (int) random(splatterFrames.length);
+      squareSize = (int)random(200,width/2);
+      brightness = (int)random(150,255);
+      
+      // AUDIO HAPPENS IMMEDIATELY AND ONCE
+      // The use of index numbers here implies tight coupling with the Controller class :(
+      // responseAudio.play(0,false);
+      // if(random(0,4) < 1) {
+        // if(random(0,4) < 1) {
+          responseAudio.play( (int)random(0,4), false);
+        // }
+        // else {
+        //   responseAudio.play(2,false);
+        // }
+      // }
+
+   }
    
    void draw() {
        if(fadeValue > 0) {
@@ -59,6 +103,7 @@ class BloodSplatter extends ActionResponse {
        }
    }
 }
+
 
 class ComboBreaker extends ActionResponse {
   PFont font;
@@ -286,6 +331,34 @@ class BloodSplatterController extends ActionResponseController {
   }
 }
 
+class GlitchSplatterController extends ActionResponseController {
+
+  String[] splatterFiles;
+  PImage[] splatterFrames;
+
+  GlitchSplatterController() {
+    super();
+
+    String[] sampleFiles = {"zizz.mp3", "powerorb.mp3", "squash2.wav", "dobe_05.mp3", "kickwin_01.mp3"};
+    responseAudio = new AudioCollection(sampleFiles, false);
+
+    File dataDir = new File(sketchPath + "/data/blood/");
+    splatterFiles = dataDir.list();
+    splatterFrames = new PImage[splatterFiles.length];
+      
+    for(int i=0; i<splatterFiles.length; i++) {
+      splatterFrames[i] = loadImage(sketchPath + "/data/blood/" + splatterFiles[i]);
+    }
+  }
+
+  void newResponse() {
+    for(int i=0; i<4;i++)
+    {
+      actionResponses.add( new GlitchSplatter(splatterFrames, responseAudio) );
+    }
+  }
+}
+
 class ComboBreakerController extends ActionResponseController {
 
   ComboBreakerController() {
@@ -416,7 +489,6 @@ class SpiderSpriteController extends SpriteController {
 
     init();
   }
-
 }
 
 

@@ -2,6 +2,8 @@
 
 // LEVELS ///////////////////////////////////////////////////////////////////////////////////////////
 abstract class Level {
+  int numHitsThisLevel = 5;
+
   void draw(int currentFrame) {
   }
 
@@ -105,6 +107,7 @@ class GameOver extends Level {
 }
 
 class ConcreteLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -114,7 +117,8 @@ class ConcreteLevel extends Level {
   AudioCollection backgroundMusic;
   String[] musicFiles = {"Reflex.aif"};
 
-  ConcreteLevel() {
+  ConcreteLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -145,7 +149,8 @@ class ConcreteLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359;
+    // score += 359;
+    score += gameController.scorePerLevel / numHitsThisLevel;
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -161,6 +166,7 @@ class ConcreteLevel extends Level {
 }
 
 class FlashingLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int[] bgColor = {255,255,255};
   PImage bgImage;
@@ -168,8 +174,10 @@ class FlashingLevel extends Level {
   ComboBreakerController comboController;
   AudioCollection backgroundMusic;
   String[] musicFiles = {"limb.wav"};
+  int scoreThisLevel = 1000;
 
-  FlashingLevel() {
+  FlashingLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -194,7 +202,8 @@ class FlashingLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359;
+    // score += 359;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -209,6 +218,7 @@ class FlashingLevel extends Level {
 }
 
 class GraveYardLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -221,7 +231,8 @@ class GraveYardLevel extends Level {
   BloodSplatterController splatterController;
   ComboBreakerController comboController;
 
-  GraveYardLevel() {
+  GraveYardLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -256,7 +267,8 @@ class GraveYardLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 159;
+    // score += 159;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -272,6 +284,7 @@ class GraveYardLevel extends Level {
 }
 
 class ZombieLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -284,7 +297,8 @@ class ZombieLevel extends Level {
   AudioCollection backgroundMusic;
   String[] musicFiles = {"Reflex.aif"};
 
-  ZombieLevel() {
+  ZombieLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -318,7 +332,8 @@ class ZombieLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 159;
+    // score += 159;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits) ;
   } //end triggerAction()
 
@@ -334,6 +349,7 @@ class ZombieLevel extends Level {
 
 
 class SpinningBatLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -350,7 +366,8 @@ class SpinningBatLevel extends Level {
   float rotation = 0;
   float currentImage = 0;
 
-  SpinningBatLevel() {
+  SpinningBatLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -388,7 +405,8 @@ class SpinningBatLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359;
+    // score += 359;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits) ;
     babySpriteController.newResponse();
   } //end triggerAction()
@@ -405,6 +423,7 @@ class SpinningBatLevel extends Level {
 
 
 class FireLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -422,7 +441,8 @@ class FireLevel extends Level {
   float rotation = 0;
   float currentImage = 0;
 
-  FireLevel() {
+  FireLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -465,7 +485,8 @@ class FireLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359;
+    // score += 359;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits);
 
     for(int i=0; i<spriteControllers.length; i++) {
@@ -487,6 +508,7 @@ class FireLevel extends Level {
 
 
 class SkullLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -506,7 +528,8 @@ class SkullLevel extends Level {
 
   int alpha = 255;
 
-  SkullLevel() {
+  SkullLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -553,7 +576,8 @@ class SkullLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359;
+    // score += 359;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits);
 
     for(int i=0; i<spriteControllers.length; i++) {
@@ -576,6 +600,7 @@ class SkullLevel extends Level {
 
 // WIRES!!
 class WiresLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int strobeFrameRate = 3;
   int[] bgColor = {255,255,255};
@@ -595,7 +620,8 @@ class WiresLevel extends Level {
 
   int alpha = 255;
 
-  WiresLevel() {
+  WiresLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -640,7 +666,8 @@ class WiresLevel extends Level {
 
   void triggerAction(int numHits) {
     splatterController.newResponse();
-    score += 359;
+    // score += 359;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
     comboController.newResponse(numHits);
 
     for(int i=0; i<spriteControllers.length; i++) {
@@ -662,18 +689,21 @@ class WiresLevel extends Level {
 
 
 class BlackLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int[] bgColor = {0,0,0};
   int alpha = 255;
   int startingFrame = 0;
   int numSecondsToShow = 2;
+  int previousScore = 0;
 
   AudioCollection backgroundMusic;
   String[] musicFiles = {"TotallyFuckingDead.mp3"};
 
   BloodSplatterController splatterController;
   
-  BlackLevel() {
+  BlackLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -691,10 +721,13 @@ class BlackLevel extends Level {
       startingFrame = currentFrame;
       backgroundMusic.play(0,true); 
       firstDraw = false;
+      previousScore = score;
     }
 
+    score = previousScore;
+
     if(currentFrame - startingFrame >= (numSecondsToShow * 30)) {
-      score += 5000;
+      score += (gameController.scorePerLevel);
     }
 
 
@@ -714,18 +747,21 @@ class BlackLevel extends Level {
 }
 
 class BieberLevel extends Level {
+  GameController gameController;
   boolean firstDraw = true;
   int[] bgColor = {0,0,0};
   int alpha = 255;
   int startingFrame = 0;
   int numSecondsToShow = 14;
+  int previousScore = 0;
 
   AudioCollection backgroundMusic;
   String[] musicFiles = {"Bieber.mp3"};
 
   BloodSplatterController splatterController;
   
-  BieberLevel() {
+  BieberLevel(GameController controller) {
+    gameController = controller;
     //don't load anything until the time comes.
   }
 
@@ -743,10 +779,14 @@ class BieberLevel extends Level {
       startingFrame = currentFrame;
       backgroundMusic.play(0,true); 
       firstDraw = false;
+      previousScore = score;
     }
 
+    score = previousScore;
+
     if(currentFrame - startingFrame >= (numSecondsToShow * 30)) {
-      score += 5000;
+      // score += 5000;
+      score += (gameController.scorePerLevel);
     }
 
 
@@ -761,6 +801,89 @@ class BieberLevel extends Level {
     backgroundMusic.destroy();
     backgroundMusic = null;
     splatterController = null;
-    score -= 5000000;
+    score -= gameController.scorePerLevel;
+  }
+}
+
+class GlitchLevel extends Level {
+  GameController gameController;
+  boolean firstDraw = true;
+  int strobeFrameRate = 3;
+  int[] bgColor = {255,255,255};
+  PImage[] bgImage = new PImage[3];
+  int bgScrollOffset = 0;
+  int bgScrollSpeed = 50;
+
+  AudioCollection backgroundMusic;
+  String[] musicFiles = {"limb.wav"};
+
+  GlitchSplatterController splatterController;
+  ComboBreakerController comboController;
+  SpriteController[] spriteControllers = new SpriteController[2];
+
+  float rotation = 0;
+  float currentImage = 0;
+
+  GlitchLevel(GameController controller) {
+    gameController = controller;
+    //don't load anything until the time comes.
+  }
+
+  void init() {
+    backgroundMusic = new AudioCollection(musicFiles, true);
+    bgImage[0] = loadImage("fire1.jpg");
+    bgImage[1] = loadImage("fire2.jpg");
+    bgImage[2] = loadImage("fire3.jpg");
+    
+    comboController = new ComboBreakerController();
+    splatterController = new GlitchSplatterController();
+    
+    spriteControllers[0] = new SkullSpinSpriteController();
+    spriteControllers[1] = new FlashingSkullSpriteController();
+  }
+
+  void draw(int currentFrame) {
+    if(firstDraw) { backgroundMusic.play(0,true); firstDraw = false;}
+
+    tint(bgColor[0],bgColor[1],bgColor[2], 255);
+
+    currentImage = (currentImage + 0.05) % (bgImage.length -1);
+  
+    int imageToShow = (int)Math.round(currentImage);
+    image(bgImage[imageToShow], bgScrollOffset, random(0,10), bgImage[imageToShow].width, bgImage[imageToShow].height);
+    image(bgImage[imageToShow], bgScrollOffset+bgImage[imageToShow].width, random(0,10), bgImage[imageToShow].width, bgImage[imageToShow].height);
+      
+    splatterController.draw();
+    comboController.draw();
+
+    for(int i=0; i<spriteControllers.length; i++) {
+      spriteControllers[i].draw();
+    }
+
+    bgScrollOffset = bgScrollOffset - bgScrollSpeed;
+    if(bgScrollOffset <= (bgImage[imageToShow].width * -1)) {
+      bgScrollOffset = 0;
+    }
+  } // end draw()
+
+  void triggerAction(int numHits) {
+    splatterController.newResponse();
+    // score += 359;
+    score += (gameController.scorePerLevel / numHitsThisLevel);
+    comboController.newResponse(numHits);
+
+    for(int i=0; i<spriteControllers.length; i++) {
+      spriteControllers[i].newResponse();
+    }
+    
+  } //end triggerAction()
+
+  void destroy() {
+    println("destroying");
+    backgroundMusic.destroy();
+    backgroundMusic = null;
+    bgImage = null;
+    splatterController = null;
+    comboController = null;
   }
 }

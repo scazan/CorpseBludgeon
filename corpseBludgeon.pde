@@ -50,7 +50,7 @@ void movieEvent(Movie m) {
 
 // MAIN CONTROLLER ///////////////////////////////////////////////////////////////////////////////////////////
 class GameController {
-  int scorePerLevel = 5000;
+  public int scorePerLevel = 2000;
   int currentLevel = 0;
   int currentFrame = 0;
   PFont scoreFont;
@@ -70,20 +70,30 @@ class GameController {
     mainMenu = new MainMenu(controller);
     gameOver  = new GameOver(controller);
     //not elegant but efficient
-    //Define the progression of levels and what objects handle them
-    levels = new Level[10];
+    
     // levels[0] = new ZombieLevel();
     // levels[0] = new FireLevel();
-    levels[0] = new ConcreteLevel();
-    levels[1] = new SkullLevel();
-    levels[2] = new WiresLevel();
-    levels[3] = new BlackLevel();
-    levels[4] = new FlashingLevel();
-    levels[5] = new BieberLevel();
-    levels[6] = new SpinningBatLevel();
-    levels[7] = new FlashingLevel();
-    levels[8] = new GraveYardLevel();
-    levels[9] = new ZombieLevel();
+
+    ArrayList<Level> levelOrder = new ArrayList<Level>();
+    levelOrder.add(new GlitchLevel(controller) );
+    levelOrder.add(new ConcreteLevel(controller) );
+    levelOrder.add(new SkullLevel(controller) );
+    levelOrder.add(new WiresLevel(controller) );
+    levelOrder.add(new BlackLevel(controller) );
+    levelOrder.add(new FlashingLevel(controller) );
+    levelOrder.add(new BieberLevel(controller) );
+    levelOrder.add(new SpinningBatLevel(controller) );
+    levelOrder.add(new FlashingLevel(controller) );
+    levelOrder.add(new GraveYardLevel(controller) );
+    levelOrder.add(new ZombieLevel(controller) );
+
+
+    //Define the progression of levels and what objects handle them
+    levels = new Level[levelOrder.size()];
+
+    for(int i=0; i<levelOrder.size(); i++) {
+      levels[i] = levelOrder.get(i);
+    }
 
     //default opening level and the next level initialized or fast loading
     levels[0].init();
@@ -104,7 +114,8 @@ class GameController {
 
       currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
 
-      if((currentLevel <= levels.length-1)) {
+      if((currentLevel <= levels.length-1) ) {
+       // && score > 0) {
         levels[currentLevel].draw(currentFrame);   
 
         if(currentLevel > previousLevel) {
@@ -126,7 +137,6 @@ class GameController {
         float scoreScaleJitter = random(0.05);
         scale(1.5 + scoreScaleJitter);
         
-
 
         int numExclamations = floor((score/1050)) * 2;
         
@@ -163,9 +173,11 @@ class GameController {
         // background(0);
         
         gameOverMenuActive = true;
+        
         try{
           levels[levels.length-1].destroy();
           levels[levels.length-1] = null;
+          currentLevel = 1; 
         } catch(Exception e) {
 
         }
