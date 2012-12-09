@@ -36,8 +36,8 @@ void draw() {
 }
 
 void mouseClicked() {
-    gameInterface.trigger(frameCount);
-    // mainController.triggerMouseEvent();
+    // gameInterface.trigger(frameCount);
+    mainController.triggerMouseEvent();
 }
 
 void oscEvent(OscMessage theOscMessage) {

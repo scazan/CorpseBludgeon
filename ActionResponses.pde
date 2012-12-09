@@ -162,7 +162,7 @@ class ComboBreaker extends ActionResponse {
       tint(255,255);
       fill(comboNumber * 50 %255, random(0,200), comboNumber * 25, ((fadeValue/fadeDuration) *255) );
       textLeading(50);
-      text(message, xPos, yPos);
+      // text(message, xPos, yPos);
 
       fadeValue--;
     }
