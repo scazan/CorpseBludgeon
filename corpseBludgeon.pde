@@ -182,7 +182,7 @@ class GameController {
         DateFormat formatter = new SimpleDateFormat("mm:ss:SSS");
         String twoPlaces = formatter.format(date);
 
-        text(twoPlaces, 10, 125);
+        text(twoPlaces, 35, 125);
         
       } 
       else {
