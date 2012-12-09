@@ -1,0 +1,20 @@
+
+*.mp3
+
+*.aiff
+
+*.mp3
+
+data/sound/Lascia.aiff
+
+data/sound/Bieber.mp3
+
+data/sound/Reflex.aif
+
+data/sound/Necromaniac.mp3
+
+data/sound/berzerker.mp3
+
+*.wav
+
+data/sound copy/.DS_Store

@@ -44,6 +44,10 @@ class AudioCollection {
   }
 
   void stop() {
+    
+  }
+
+  void destroy() {
     for(int i=0; i<samples.length; i++) {
       // (AudioSample)samples[i].close();
 
@@ -57,10 +61,6 @@ class AudioCollection {
 
     minim.stop();
     minim = null;
-  }
-
-  void destroy() {
-    this.stop();
     
     // minim.stop();
     // samples = null;

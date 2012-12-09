@@ -191,6 +191,8 @@ class GameController {
         gameOverMenuActive = true;
         
         try{
+          
+          levels[currentLevel].destroy();
 
           for(int i=0; i<levels.length; i++) {
             levels[i].destroy();  
@@ -203,7 +205,7 @@ class GameController {
           // levels[currentLevel+1].destroy();
           currentLevel = 1; 
         } catch(Exception e) {
-          // println(e);
+          println(e);
         }
         
         gameOver.draw(largestScore);
@@ -232,7 +234,8 @@ class GameController {
   
   void triggerAction(int numHits) {
     
-    if(currentLevel <= levels.length-1 && !gameOverMenuActive) {
+    if(currentLevel <= levels.length-1 && !gameOverMenuActive ) {
+      // && !mainMenuActive) {
       if(mainMenuActive) {
         mainMenu.triggerAction(numHits);
         timeStarted = new Long(System.currentTimeMillis());
@@ -284,6 +287,8 @@ class GameController {
         gameOverMenuActive = true;
         
         try{
+
+          levels[currentLevel].destroy();
 
           for(int i=0; i<levels.length; i++) {
             levels[i].destroy();  
