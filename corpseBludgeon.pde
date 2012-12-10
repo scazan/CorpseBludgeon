@@ -220,10 +220,10 @@ class GameController {
       // Score slowly goes down if the player is not hitting
       if(currentLevel < 4) {
         scoreDeceleration = (int)Math.pow(timePlayed, 1.5);  
-      } else if(currentLevel < 8) {
-        scoreDeceleration = (int)Math.pow(timePlayed, 1.75);  
+//      } else if(currentLevel < 8) {
+//        scoreDeceleration = (int)Math.pow(timePlayed, 1.75);  
       } else {
-        scoreDeceleration = (int)Math.pow(timePlayed, 2);  
+        scoreDeceleration = (int)Math.pow(timePlayed, 1.75);  
       }
       
       score = (currentFrame%12) == 0 ? (score <= 0 ? 0 : score-scoreDeceleration) : score ;
@@ -234,8 +234,7 @@ class GameController {
   
   void triggerAction(int numHits) {
     
-    if(currentLevel <= levels.length-1 && !gameOverMenuActive ) {
-      // && !mainMenuActive) {
+    if(currentLevel <= levels.length-1 && !gameOverMenuActive && !mainMenuActive) {
       if(mainMenuActive) {
         mainMenu.triggerAction(numHits);
         timeStarted = new Long(System.currentTimeMillis());
@@ -247,17 +246,17 @@ class GameController {
     else if(gameOverMenuActive) {
       // println(gameOverMenuActive + ", " + mainMenuActive);
       // mainMenu = new MainMenu(controller);
-      score = 0;
-      gameOver.destroy();
-      // gameOver.triggerAction(0);
-      gameOverMenuActive = false;
-      score = 0;
-      timeStarted = new Long(0L);
-      timePlayed = 0;
-      score = 10;
-      largestScore = 0;
+      // score = 0;
+      // gameOver.destroy();
+      // // gameOver.triggerAction(0);
+      // gameOverMenuActive = false;
+      // score = 0;
+      // timeStarted = new Long(0L);
+      // timePlayed = 0;
+      // score = 10;
+      // largestScore = 0;
 
-      mainController = new GameController();
+      // mainController = new GameController();
     }
      
   }
