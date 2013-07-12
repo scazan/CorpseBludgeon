@@ -18,3 +18,5 @@ data/sound/berzerker.mp3
 *.wav
 
 data/sound copy/.DS_Store
+
+data/soundNEW/.DS_Store
