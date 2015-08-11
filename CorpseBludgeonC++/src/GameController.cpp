@@ -25,7 +25,7 @@ GameController::GameController() {
     //mainMenu = new MainMenu(controller);
     //gameOver  = new GameOver(controller);
 
-	std::vector<Level> levelOrder;
+	std::vector<Level *> levelOrder;
 
 	//levelOrder.push_back(new ConcreteLevel(this) );
     //levelOrder.push_back(new SkullLevel(controller) );
@@ -46,7 +46,7 @@ GameController::GameController() {
 
 
 	//Define the progression of levels and what objects handle them
-	std::vector<Level> levels;
+	std::vector<Level *> levels;
 
 	for(int i=0; i < levelOrder.size(); i++) {
 	  levels.push_back( levelOrder.at(i) );

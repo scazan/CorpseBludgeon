@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Level.h"
 
 class MainMenu: public Level {

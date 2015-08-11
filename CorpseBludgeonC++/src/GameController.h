@@ -1,6 +1,7 @@
 #include <vector>
-#include "Level.h"
+#include "MainMenu.h"
 #include <ofTrueTypeFont.h>
+class Level;
 
 class GameController {
 	public:
@@ -18,11 +19,11 @@ class GameController {
 		int scoreDeceleration;
 		ofTrueTypeFont scoreFont;
 
-		Level mainMenu;
+		MainMenu mainMenu;
 		//Level gameOver;
 		bool mainMenuActive;
 		bool gameOverMenuActive;
-		std::vector<Level> levels;
+		std::vector<Level *> levels;
 
 		int score;
 		float timeStarted;
