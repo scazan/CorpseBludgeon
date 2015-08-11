@@ -22,3 +22,4 @@ data/sound copy/.DS_Store
 data/soundNEW/.DS_Store
 
 CorpseBludgeonC++/bin/
+CorpseBludgeonC++/obj/*

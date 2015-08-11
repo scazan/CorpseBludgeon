@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "GameController.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -15,4 +16,7 @@ class ofApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 		void gotMessage(ofMessage msg);
+
+	private:
+		GameController controller;
 };

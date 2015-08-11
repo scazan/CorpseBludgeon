@@ -309,7 +309,8 @@ obj/linux64/Release/src/ofApp.o: src/ofApp.cpp src/ofApp.h \
  /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/video/ofVideoPlayer.h \
  /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/video/ofGstVideoPlayer.h \
  /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/3d/ofCamera.h \
- /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/3d/ofEasyCam.h
+ /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/3d/ofEasyCam.h \
+ src/GameController.h src/Level.h
 
 src/ofApp.h:
 
@@ -966,3 +967,7 @@ src/ofApp.h:
 /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/3d/ofCamera.h:
 
 /home/scott/dev/libs/of_v0.8.4_linux64_release/libs/openFrameworks/3d/ofEasyCam.h:
+
+src/GameController.h:
+
+src/Level.h:
