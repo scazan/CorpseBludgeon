@@ -12,7 +12,6 @@ GameController::GameController() {
 	currentFrame = 0;
 	scoreDeceleration = 800;
 
-	//Level mainMenu;
 	//Level gameOver;
 	mainMenuActive = true;
 	gameOverMenuActive = false;
@@ -22,8 +21,8 @@ GameController::GameController() {
 
 	//scoreFont.loadFont("Cracked-64.ttf");
 
-    //mainMenu = new MainMenu(controller);
-    //gameOver  = new GameOver(controller);
+	mainMenu = new MainMenu(this);
+    //gameOver  = new GameOver(this);
 
 	std::vector<Level *> levelOrder;
 
@@ -48,8 +47,8 @@ GameController::GameController() {
 	//Define the progression of levels and what objects handle them
 	std::vector<Level *> levels;
 
-	for(int i=0; i < levelOrder.size(); i++) {
-	  levels.push_back( levelOrder.at(i) );
+	for(unsigned int i=0; i < levelOrder.size(); i++) {
+		levels.push_back( levelOrder.at(i) );
 	}
 
     ////default opening level and the next level initialized or fast loading
@@ -64,11 +63,12 @@ GameController::~GameController() {
 
 void GameController::draw() {
 
-	//if(mainMenuActive) {
-		//mainMenu.draw(currentFrame);
-	//} else if(gameOverMenuActive){
+	if(mainMenuActive) {
+		mainMenu->draw(currentFrame);
+	} else if(gameOverMenuActive){
 		//gameOver.draw(largestScore);
-	//} else {
+	} 
+	//else {
 
 		//int previousLevel = currentLevel;
 		//int proposedLevel = score / scorePerLevel;
@@ -162,7 +162,7 @@ void GameController::draw() {
 		//score = (currentFrame % 12) == 0 ? (score <= 0 ? 0 : score - scoreDeceleration) : score;
 	//}
 
-	//currentFrame++;
+	currentFrame++;
 }
 
 void GameController::triggerAction(int numHits) {
@@ -170,3 +170,4 @@ void GameController::triggerAction(int numHits) {
 
 void GameController::triggerMouseEvent() {
 }
+

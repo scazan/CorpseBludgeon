@@ -1,6 +1,9 @@
+#pragma once
+
 #include <vector>
 #include "MainMenu.h"
 #include <ofTrueTypeFont.h>
+
 class Level;
 
 class GameController {
@@ -9,6 +12,9 @@ class GameController {
 		~GameController();
 
 		int scorePerLevel;
+		bool mainMenuActive;
+		bool gameOverMenuActive;
+
 		void draw();
 		void triggerAction(int numHits);
 		void triggerMouseEvent();
@@ -19,10 +25,8 @@ class GameController {
 		int scoreDeceleration;
 		ofTrueTypeFont scoreFont;
 
-		MainMenu mainMenu;
+		MainMenu *mainMenu;
 		//Level gameOver;
-		bool mainMenuActive;
-		bool gameOverMenuActive;
 		std::vector<Level *> levels;
 
 		int score;
