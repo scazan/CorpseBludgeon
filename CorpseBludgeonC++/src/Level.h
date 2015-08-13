@@ -1,3 +1,5 @@
+#ifndef LEVEL_H
+#define LEVEL_H
 
 class Level {
 	int numHitsThisLevel = 8;
@@ -11,3 +13,4 @@ class Level {
 		virtual void destroy() = 0;
 };
 
+#endif

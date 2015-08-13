@@ -22,7 +22,7 @@ GameController::GameController() {
 	//scoreFont.loadFont("Cracked-64.ttf");
 
 	mainMenu = new MainMenu(this);
-    //gameOver  = new GameOver(this);
+	gameOver = new GameOver(this);
 
 	std::vector<Level *> levelOrder;
 
@@ -44,8 +44,6 @@ GameController::GameController() {
     //levelOrder.push_back(new FlashingLevel(controller) );
 
 
-	//Define the progression of levels and what objects handle them
-	std::vector<Level *> levels;
 
 	for(unsigned int i=0; i < levelOrder.size(); i++) {
 		levels.push_back( levelOrder.at(i) );
@@ -66,8 +64,8 @@ void GameController::draw() {
 	if(mainMenuActive) {
 		mainMenu->draw(currentFrame);
 	} else if(gameOverMenuActive){
-		//gameOver.draw(largestScore);
-	} 
+		gameOver->draw(largestScore);
+	}
 	//else {
 
 		//int previousLevel = currentLevel;
@@ -166,6 +164,19 @@ void GameController::draw() {
 }
 
 void GameController::triggerAction(int numHits) {
+
+	if(currentLevel <= levels.size()-1 && !gameOverMenuActive && !mainMenuActive) {
+		if(mainMenuActive) {
+			mainMenu->triggerAction(numHits);
+			timeStarted = ofGetElapsedTimef();
+		}
+		else {
+			levels[currentLevel]->triggerAction(numHits);
+		}
+	}
+
+	gameOverMenuActive = mainMenuActive;
+	mainMenuActive = !mainMenuActive;
 }
 
 void GameController::triggerMouseEvent() {

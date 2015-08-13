@@ -27,6 +27,7 @@ void MainMenu::init() {
 }
 
 void MainMenu::triggerAction(int numHits) {
+	cout << "trigger" << '\n';
 	//gameController->mainMenuActive = false;
 	backgroundMusic.destroy();
 	firstDraw = true;

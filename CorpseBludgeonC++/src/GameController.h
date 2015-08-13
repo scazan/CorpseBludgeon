@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "MainMenu.h"
+#include "GameOver.h"
 #include <ofTrueTypeFont.h>
 
 class Level;
@@ -26,7 +27,9 @@ class GameController {
 		ofTrueTypeFont scoreFont;
 
 		MainMenu *mainMenu;
-		//Level gameOver;
+		GameOver *gameOver;
+
+		//Define the progression of levels and what objects handle them
 		std::vector<Level *> levels;
 
 		int score;

@@ -33,7 +33,7 @@ void ofApp::mouseMoved(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	controller.triggerAction(1);
 }
 
 //--------------------------------------------------------------

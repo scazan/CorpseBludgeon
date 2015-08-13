@@ -1,3 +1,6 @@
+#ifndef AUDIOCOLLECTION_H
+#define AUDIOCOLLECTION_H
+
 #include "ofSoundPlayer.h"
 
 class AudioCollection {
@@ -11,3 +14,5 @@ class AudioCollection {
 		void stop();
 		void destroy();
 };
+
+#endif

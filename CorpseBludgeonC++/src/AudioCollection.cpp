@@ -26,6 +26,8 @@ void AudioCollection::stop() {
 
 void AudioCollection::destroy() {
 	for(unsigned int i=0; i < samples.size(); i++) {
+		cout << "stoppin sound" << '\n';
+		samples[i]->stop();
 		samples[i]->unloadSound();
 	}
 
