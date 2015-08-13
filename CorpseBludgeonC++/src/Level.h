@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+
 class Level {
 	int numHitsThisLevel = 8;
 

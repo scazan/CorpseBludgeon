@@ -20,7 +20,7 @@ void MainMenu::draw(int currentFrame) {
 	}
 
 	ofBackground(5);
-	bgImage.draw(0, 0);
+	bgImage.draw( 0, 0, ofGetViewportWidth(), ofGetViewportHeight() );
 }
 
 void MainMenu::init() {

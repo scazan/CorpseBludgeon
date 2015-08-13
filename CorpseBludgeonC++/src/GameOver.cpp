@@ -2,38 +2,35 @@
 
 GameOver::GameOver(GameController *controller) {
 	gameController = controller;
-	//titleFont = loadFont("Lato.vlw");
-	//subtitleFont = loadFont("LatoSmall.vlw");
+
+    //scoreFont = loadFont("Cracked-64.vlw");
+    //titleFont = loadFont("Lato-128.vlw");
+    //subtitleFont = loadFont("LatoSmall.vlw");
 
 	musicFiles.push_back("Lascia.aiff");
 	backgroundMusic.init(musicFiles, true);
-	bgImage.loadImage("openingScreen.jpg");
+	bgImage.loadImage("gameover.gif");
 }
 
 GameOver::~GameOver() {
 }
 
-void GameOver::draw(int currentFrame) {
-	if(firstDraw) {
-		backgroundMusic.play(0, true);
-		firstDraw = false;
-	}
+void GameOver::draw(int largestScore) {
 
-	ofBackground(255,0,0);
 	//bgImage.draw(0, 0);
 
-	//if(firstDraw) {
-		//backgroundMusic.play(0, true); 
-		//firstDraw = false;
-		//currentFade = 255;
-	//}
+	if(firstDraw) {
+		backgroundMusic.play(0, true); 
+		firstDraw = false;
+		currentFade = 255;
+	}
 
-	//int endScore = largestScore;
+	int endScore = largestScore;
 
-	//ofBackground(5);
+	ofBackground(5);
 	//tint(currentFade,255);
 
-	//bgImage.draw( 0, 0, width, height);
+	bgImage.draw( 0, 0, ofGetViewportWidth(), ofGetViewportHeight());
 	//textFont(titleFont);
 	//tint(255,255);
 	//fill(150, 0, 0, -(currentFade - 255) );

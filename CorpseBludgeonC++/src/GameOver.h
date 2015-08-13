@@ -21,6 +21,10 @@ class GameOver: public Level {
 	AudioCollection backgroundMusic;
 	std::vector<std::string> musicFiles;
 
+	//PFont scoreFont;
+	int currentFade = 255;
+
+
 	public:
 		GameOver(GameController *controller);
 		~GameOver();
