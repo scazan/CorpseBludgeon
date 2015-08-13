@@ -50,8 +50,8 @@ GameController::GameController() {
 	}
 
     ////default opening level and the next level initialized or fast loading
-	//levels.at(0).init();
-	//levels.at(1).init();
+	//levels.at(0)->init();
+	//levels.at(1)->init();
 
     timeStarted = ofGetElapsedTimef();
 }
@@ -63,48 +63,49 @@ void GameController::draw() {
 
 	if(mainMenuActive) {
 		mainMenu->draw(currentFrame);
-	} else if(gameOverMenuActive){
+	} 
+	else if(gameOverMenuActive){
 		gameOver->draw(largestScore);
 	}
-	//else {
+	else {
 
-		//int previousLevel = currentLevel;
-		//int proposedLevel = score / scorePerLevel;
+		unsigned int previousLevel = currentLevel;
+		int proposedLevel = score / scorePerLevel;
 
-		//currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
+		currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
 
-		//if((currentLevel <= levels.length-1) && score > 0) {
-			//levels[currentLevel].draw(currentFrame);
+		if((currentLevel <= levels.size()-1) && score > 0) {
+			levels[currentLevel]->draw(currentFrame);
 
-			//if(currentLevel > previousLevel) {
-				//if(currentLevel < levels.length-1) {
-					//levels[currentLevel + 1].init();
-					//if(currentLevel > 0) {
-						//levels[currentLevel-1].destroy();
+			if(currentLevel > previousLevel) {
+				if(currentLevel < levels.size()-1) {
+					levels[currentLevel + 1]->init();
+					if(currentLevel > 0) {
+						levels[currentLevel-1]->destroy();
 						//levels[currentLevel-1] = null;
-					//}
-				//}
-			//}
+					}
+				}
+			}
 
 			//// Display score
 			//string scoreText = "";
 			//textFont(scoreFont);
 			//fill(225, 0, 0, 220);
 			//textLeading(50);
-			//float scoreScaleJitter = random(0.05);
+			float scoreScaleJitter = (float)(random() % 100) * 0.05;
 			//scale(1.5 + scoreScaleJitter);
 
-			//int numExclamations = floor( (score/1050) )  * 2;
+			int numExclamations = std::floor( (score/1050) )  * 2;
 
-			//for(int i=1; i<=numExclamations; i++) {
+			for(int i=1; i<=numExclamations; i++) {
 				//text("|", 10 + (i*15), 50);
-			//}
+			}
 
 			//fill(100,0,255,220);
-			//numExclamations = floor((largestScore/1050)) * 2;
+			numExclamations = std::floor((largestScore/1050)) * 2;
 			//text("|", 10 + (numExclamations*15), 50);
 
-			//largestScore = score > largestScore ? score : largestScore;
+			largestScore = score > largestScore ? score : largestScore;
 			//textAlign(LEFT);
 			//text(largestScore, 30 + (numExclamations*15), 50 + scoreScaleJitter);
 
@@ -112,7 +113,7 @@ void GameController::draw() {
 
 			//fill(255, 0, 0, 220);
 
-			//float timeMillis = ofGetElapsedTimef();
+			float timeMillis = ofGetElapsedTimef();
 
 			//// TIME DISPLAY
 			//timePlayed = (timeMillis - timeStarted) / 1000.0;
@@ -124,12 +125,12 @@ void GameController::draw() {
 
 			//text(twoPlaces, 35, 125);
 
-		//} 
-		//else {
+		}
+		else {
 			//// Display score
-			//gameOverMenuActive = true;
+			gameOverMenuActive = true;
 
-			//try {
+			try {
 
 				//levels[currentLevel].destroy();
 
@@ -139,26 +140,26 @@ void GameController::draw() {
 
 				//levels = null;
 
-				//currentLevel = 1;
-			//}
-			//catch (int e) {
-				//cout << e << '\n';
-			//}
+				currentLevel = 1;
+			}
+			catch (int e) {
+				cout << e << '\n';
+			}
 
-			//gameOver.draw(largestScore);
+			gameOver->draw(largestScore);
 
-		//}
+		}
 
-		//// Score slowly goes down if the player is not hitting
-		//if(currentLevel < 4) {
-			//scoreDeceleration = (int)pow(timePlayed, 1.5);
-		//}
-		//else {
-			//scoreDeceleration = (int)pow(timePlayed, 1.75);
-		//}
+		// Score slowly goes down if the player is not hitting
+		if(currentLevel < 4) {
+			scoreDeceleration = (int)std::pow(timePlayed, 1.5);
+		}
+		else {
+			scoreDeceleration = (int)std::pow(timePlayed, 1.75);
+		}
 
-		//score = (currentFrame % 12) == 0 ? (score <= 0 ? 0 : score - scoreDeceleration) : score;
-	//}
+		score = (currentFrame % 12) == 0 ? (score <= 0 ? 0 : score - scoreDeceleration) : score;
+	}
 
 	currentFrame++;
 }
@@ -175,8 +176,6 @@ void GameController::triggerAction(int numHits) {
 		}
 	}
 
-	gameOverMenuActive = mainMenuActive;
-	mainMenuActive = !mainMenuActive;
 }
 
 void GameController::triggerMouseEvent() {

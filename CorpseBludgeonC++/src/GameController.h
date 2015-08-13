@@ -21,7 +21,7 @@ class GameController {
 		void triggerMouseEvent();
 
 	private:
-		int currentLevel;
+		unsigned int currentLevel;
 		int currentFrame;
 		int scoreDeceleration;
 		ofTrueTypeFont scoreFont;
