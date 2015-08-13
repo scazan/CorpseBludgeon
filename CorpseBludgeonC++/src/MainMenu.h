@@ -1,11 +1,14 @@
 #pragma once
 
+#include "AudioCollection.h"
 #include "Level.h"
 #include <string>
 #include <ofGraphics.h>
 #include <ofImage.h>
 
+// Need to resolve the circular reference. Here is a stopgap.
 class GameController;
+
 class MainMenu: public Level {
 
 	bool firstDraw = true;
@@ -15,9 +18,8 @@ class MainMenu: public Level {
 	ofImage bgImage;
 	//PFont titleFont, subtitleFont;
 	int red = 0;
-	//AudioCollection backgroundMusic;
-	//string[] musicFiles = {"Lascia.aiff"};
-	std::string musicFiles[1] = {"Lascia.aiff"};
+	AudioCollection backgroundMusic;
+	std::vector<std::string> musicFiles;
 
 	public:
 		MainMenu(GameController *controller);

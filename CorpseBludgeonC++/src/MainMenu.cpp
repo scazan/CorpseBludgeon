@@ -5,7 +5,8 @@ MainMenu::MainMenu(GameController *controller) {
 	//titleFont = loadFont("Lato.vlw");
 	//subtitleFont = loadFont("LatoSmall.vlw");
 
-	//backgroundMusic = new AudioCollection(musicFiles, true);
+	musicFiles.push_back("Lascia.aiff");
+	backgroundMusic.init(musicFiles, true);
 	bgImage.loadImage("openingScreen.jpg");
 }
 
@@ -13,8 +14,8 @@ MainMenu::~MainMenu() {
 }
 
 void MainMenu::draw(int currentFrame) {
-	if(firstDraw) { 
-		//backgroundMusic.play(0, true); 
+	if(firstDraw) {
+		backgroundMusic.play(0, true);
 		firstDraw = false;
 	}
 
@@ -27,7 +28,7 @@ void MainMenu::init() {
 
 void MainMenu::triggerAction(int numHits) {
 	//gameController->mainMenuActive = false;
-	//backgroundMusic.destroy();
+	backgroundMusic.destroy();
 	firstDraw = true;
 }
 
