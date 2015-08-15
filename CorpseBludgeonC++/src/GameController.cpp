@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "ConcreteLevel.h"
 
 #include <iostream>
 #include <math.h>
@@ -21,12 +22,12 @@ GameController::GameController() {
 
 	//scoreFont.loadFont("Cracked-64.ttf");
 
-	mainMenu = new MainMenu(this);
-	gameOver = new GameOver(this);
+	mainMenu = new MainMenu();
+	gameOver = new GameOver();
 
 	std::vector<Level *> levelOrder;
 
-	//levelOrder.push_back(new ConcreteLevel(this) );
+	levelOrder.push_back(new ConcreteLevel() );
     //levelOrder.push_back(new SkullLevel(controller) );
     //levelOrder.push_back(new WiresLevel(controller) );
     //levelOrder.push_back(new GlitchLevel(controller) );
@@ -50,7 +51,7 @@ GameController::GameController() {
 	}
 
     ////default opening level and the next level initialized or fast loading
-	//levels.at(0)->init();
+	levels.at(0)->init();
 	//levels.at(1)->init();
 
     timeStarted = ofGetElapsedTimef();
@@ -70,7 +71,7 @@ void GameController::draw() {
 	else {
 
 		unsigned int previousLevel = currentLevel;
-		int proposedLevel = score / scorePerLevel;
+		unsigned int proposedLevel = score / scorePerLevel;
 
 		currentLevel = proposedLevel > currentLevel ? (score / scorePerLevel) : currentLevel;
 
@@ -166,14 +167,14 @@ void GameController::draw() {
 
 void GameController::triggerAction(int numHits) {
 
-	if(currentLevel <= levels.size()-1 && !gameOverMenuActive && !mainMenuActive) {
-		if(mainMenuActive) {
-			mainMenu->triggerAction(numHits);
-			timeStarted = ofGetElapsedTimef();
-		}
-		else {
-			levels[currentLevel]->triggerAction(numHits);
-		}
+	cout << "trigger gamecontroller: " <<  levels.size()-1 << mainMenuActive << gameOverMenuActive << '\n';
+	if(mainMenuActive) {
+		mainMenu->triggerAction(numHits);
+		mainMenuActive = false;
+		timeStarted = ofGetElapsedTimef();
+	}
+	else if(currentLevel <= levels.size()-1 && !gameOverMenuActive && !mainMenuActive) {
+		score += scorePerLevel / levels[currentLevel]->triggerAction(numHits);
 	}
 
 }

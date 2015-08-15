@@ -1,7 +1,6 @@
 #include "GameOver.h"
 
-GameOver::GameOver(GameController *controller) {
-	gameController = controller;
+GameOver::GameOver() {
 
     //scoreFont = loadFont("Cracked-64.vlw");
     //titleFont = loadFont("Lato-128.vlw");
@@ -57,10 +56,11 @@ void GameOver::draw(int largestScore) {
 void GameOver::init() {
 }
 
-void GameOver::triggerAction(int numHits) {
-	//gameController->mainMenuActive = false;
+int GameOver::triggerAction(int numHits) {
 	backgroundMusic.destroy();
 	firstDraw = true;
+
+	return 0;
 }
 
 void GameOver::destroy() {

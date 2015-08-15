@@ -1,5 +1,3 @@
-#pragma once
-
 #include "AudioCollection.h"
 #include "Level.h"
 #include <string>
@@ -7,23 +5,22 @@
 #include <ofImage.h>
 
 
-class MainMenu: public Level {
-
+class ConcreteLevel : public Level {
 	bool firstDraw = true;
-	int bgColor[3] = {50,50,50};
-
+	int strobeFrameRate = 3;
+	int bgColor[3] = {255,255,255};
 	ofImage bgImage;
-	//PFont titleFont, subtitleFont;
-	int red = 0;
+	//BloodSplatterController splatterController;
+	//ComboBreakerController comboController;
 	AudioCollection backgroundMusic;
 	std::vector<std::string> musicFiles;
+	//String[] musicFiles = {"Reflex.aif"};
 
 	public:
-		MainMenu();
-		~MainMenu();
+		ConcreteLevel();
 
-		void draw(int currentFrame);
 		void init();
+		void draw(int currentFrame);
 		int triggerAction(int numHits);
 		void destroy();
 };

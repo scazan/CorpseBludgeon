@@ -1,7 +1,6 @@
 #include "MainMenu.h"
 
-MainMenu::MainMenu(GameController *controller) {
-	gameController = controller;
+MainMenu::MainMenu() {
 	//titleFont = loadFont("Lato.vlw");
 	//subtitleFont = loadFont("LatoSmall.vlw");
 
@@ -26,11 +25,12 @@ void MainMenu::draw(int currentFrame) {
 void MainMenu::init() {
 }
 
-void MainMenu::triggerAction(int numHits) {
+int MainMenu::triggerAction(int numHits) {
 	cout << "trigger" << '\n';
-	//gameController->mainMenuActive = false;
 	backgroundMusic.destroy();
 	firstDraw = true;
+
+	return 0;
 }
 
 void MainMenu::destroy() {

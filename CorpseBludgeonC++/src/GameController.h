@@ -1,8 +1,9 @@
-#pragma once
+#ifndef GAMECONTROLLER_H
+#define GAMECONTROLLER_H
 
-#include <vector>
 #include "MainMenu.h"
 #include "GameOver.h"
+#include <vector>
 #include <ofTrueTypeFont.h>
 
 class Level;
@@ -12,7 +13,9 @@ class GameController {
 		GameController();
 		~GameController();
 
+		int score;
 		int scorePerLevel;
+
 		bool mainMenuActive;
 		bool gameOverMenuActive;
 
@@ -32,10 +35,10 @@ class GameController {
 		//Define the progression of levels and what objects handle them
 		std::vector<Level *> levels;
 
-		int score;
 		float timeStarted;
 		float timePlayed;
 		int largestScore;
 
 };
 
+#endif
