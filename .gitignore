@@ -4,6 +4,7 @@
 *.aiff
 
 *.mp3
+*.vim
 
 data/sound/Lascia.aiff
 
