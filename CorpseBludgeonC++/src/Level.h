@@ -4,10 +4,10 @@
 class Level {
 
 	public:
-		Level() {};
-		~Level() {};
-		virtual void draw(int currentFrame) = 0;
+		//Level() {};
+		//~Level() {};
 		virtual void init() = 0;
+		virtual void draw(int currentFrame) = 0;
 		virtual int triggerAction(int numHits) = 0;
 		virtual void destroy() = 0;
 

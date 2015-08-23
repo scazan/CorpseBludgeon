@@ -9,7 +9,7 @@ void ConcreteLevel::init() {
 	backgroundMusic.init(musicFiles, true);
 	bgImage.loadImage("grunge.jpg");
 
-	//splatterController = new BloodSplatterController();
+	splatterController.init();
 	//comboController = new ComboBreakerController();
 }
 
@@ -29,7 +29,7 @@ void ConcreteLevel::draw(int currentFrame) {
 		//bgColor[2] = (int)random(255);
 	}
 
-	//splatterController.draw();
+	splatterController.draw();
 	//comboController.draw();
 
   }
@@ -37,6 +37,7 @@ void ConcreteLevel::draw(int currentFrame) {
 int ConcreteLevel::triggerAction(int numHits) {
 	//splatterController.newResponse();
 	//comboController.newResponse(numHits) ;
+	cout << "hit" << '\n';
 	return numHitsThisLevel;
 }
 

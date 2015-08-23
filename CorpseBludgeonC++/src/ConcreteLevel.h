@@ -1,6 +1,9 @@
 #include "AudioCollection.h"
 #include "Level.h"
+#include "ActionResponseControllers.h"
+
 #include <string>
+#include <vector>
 #include <ofGraphics.h>
 #include <ofImage.h>
 
@@ -10,11 +13,10 @@ class ConcreteLevel : public Level {
 	int strobeFrameRate = 3;
 	int bgColor[3] = {255,255,255};
 	ofImage bgImage;
-	//BloodSplatterController splatterController;
+	BloodSplatterController splatterController;
 	//ComboBreakerController comboController;
 	AudioCollection backgroundMusic;
-	std::vector<std::string> musicFiles;
-	//String[] musicFiles = {"Reflex.aif"};
+	vector<std::string> musicFiles;
 
 	public:
 		ConcreteLevel();

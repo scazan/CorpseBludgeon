@@ -8,7 +8,7 @@ void AudioCollection::init(std::vector<std::string> sampleVector, bool looping) 
 	for(unsigned int i=0; i < sampleVector.size(); i++) {
 		samples.push_back( new ofSoundPlayer() );
 		samples[i]->loadSound("sound/" + sampleVector[i] );
-		//samples[i]->setMultiPlay(looping);
+		samples[i]->setLoop(looping);
 	}
 }
 
