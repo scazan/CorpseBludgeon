@@ -25,3 +25,13 @@ class BloodSplatter: public ActionResponse {
 		void init(vector<ofImage> *frames, AudioCollection *responseAudio);
 		void draw();
 };
+
+class ComboBreaker: public ActionResponse {
+	//PFont font;
+	int comboNumber;
+
+	public:
+		~ComboBreaker();
+		void init(int numHits, AudioCollection *responseAudio);
+		void draw();
+};

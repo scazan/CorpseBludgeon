@@ -10,6 +10,7 @@ void ConcreteLevel::init() {
 	bgImage.loadImage("grunge.jpg");
 
 	splatterController.init();
+	comboController.init();
 	//comboController = new ComboBreakerController();
 }
 
@@ -32,13 +33,14 @@ void ConcreteLevel::draw(int currentFrame) {
 	}
 
 	splatterController.draw();
-	//comboController.draw();
+	comboController.draw();
 
   }
 
 int ConcreteLevel::triggerAction(int numHits) {
-	splatterController.newResponse();
-	//comboController.newResponse(numHits) ;
+	splatterController.newResponse(numHits);
+	comboController.newResponse(numHits) ;
+
 	return numHitsThisLevel;
 }
 

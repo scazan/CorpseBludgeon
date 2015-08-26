@@ -70,3 +70,67 @@ void BloodSplatter::draw() {
 
 BloodSplatter::~BloodSplatter() {
 }
+
+void ComboBreaker::init(int numHits, AudioCollection *responseAudio) {
+	// TODO: Constrain this properly to window
+	int width = ofGetScreenWidth(),
+		height = ofGetScreenHeight();
+
+	xPos = (rand() % (int)(width));
+	yPos = (rand() % (int)(height));
+	fadeDuration = 25.f;
+	fadeValue = fadeDuration;
+
+    comboNumber = numHits;
+    //font = loadFont("Cracked-64.vlw"); 
+    //textFont(font); 
+
+	responseAudio->play(0,false);
+}
+
+void ComboBreaker::draw() {
+	std::string message = comboNumber + " IN A ROW!!!";
+
+	if(comboNumber > 3) {
+		message += '\n';
+	}
+
+	if(comboNumber > 10) {
+		message += "DOUBLE";
+	}
+
+	if(comboNumber > 3) {
+		message += " SUPER";
+	}
+
+	if(comboNumber > 6) {
+		message += " MEGA";
+	}
+
+	if(comboNumber > 10) {
+		message += " ULTIMATE";
+	}
+
+	message += " COMBO";
+
+	if(comboNumber > 3) {
+		message += " BREAKER";
+	}
+
+	message += "!!!!!!!";
+
+	if(fadeValue > 0) {
+		ofImage backImage;
+		backImage.loadImage("psycho2.png");
+		ofSetColor(comboNumber * 50 %255, (int)rand() % 200, comboNumber * 25, ((fadeValue/fadeDuration) *200) );
+		backImage.draw(xPos+50, yPos-50);
+		ofSetColor(255,255);
+		//fill(comboNumber * 50 %255, random(0,200), comboNumber * 25, ((fadeValue/fadeDuration) *255) );
+		//textLeading(50);
+
+		fadeValue--;
+	}
+	else {
+		display = false;
+	}
+}

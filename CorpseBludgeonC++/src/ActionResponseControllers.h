@@ -7,7 +7,7 @@ class ActionResponseController {
 
 	public:
 		void draw();
-		virtual void newResponse() = 0;
+		virtual void newResponse(int numHits) = 0;
 		virtual void init() = 0;
 
 		AudioCollection *responseAudio;
@@ -21,6 +21,12 @@ class BloodSplatterController: public ActionResponseController {
 	public:
 		vector<ofImage> splatterFrames;
 
-		void newResponse();
+		void newResponse(int numHits);
+		void init();
+};
+
+class ComboBreakerController: public ActionResponseController {
+	public:
+		void newResponse(int numHits);
 		void init();
 };

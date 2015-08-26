@@ -14,7 +14,7 @@ class ConcreteLevel : public Level {
 	int bgColor[3] = {255,255,255};
 	ofImage bgImage;
 	BloodSplatterController splatterController;
-	//ComboBreakerController comboController;
+	ComboBreakerController comboController;
 	AudioCollection backgroundMusic;
 	vector<std::string> musicFiles;
 
