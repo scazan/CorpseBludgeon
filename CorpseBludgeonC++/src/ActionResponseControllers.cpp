@@ -23,7 +23,6 @@ void ActionResponseController::draw() {
 
 
 void BloodSplatterController::init() {
-
 	vector<string> sampleFiles;
 	sampleFiles.push_back("coin.wav");
 	sampleFiles.push_back("squash.wav");
@@ -34,19 +33,18 @@ void BloodSplatterController::init() {
 
 	ofDirectory splatterFiles("blood/");
 	splatterFiles.listDir();
-	splatterFrames.resize( splatterFiles.numFiles() );
 
 	for(int i=0; i<splatterFiles.numFiles(); i++) {
 		splatterFrames.push_back(ofImage());
-		splatterFrames[i].loadImage(splatterFiles.getPath(i));
-		//splatterFrames[i] = loadImage(sketchPath + "/data/blood/" + splatterFiles[i]);
+		splatterFrames.back().loadImage(splatterFiles.getPath(i));
 	}
 }
 
 void BloodSplatterController::newResponse() {
-	for(unsigned int i=0; i<4;i++) {
+	// TODO: Implement multiple splatters. On first conversion I had some NULL pointer issues
+	//for(unsigned int i=0; i<4;i++) {
 		BloodSplatter *splatter = new BloodSplatter();
+		splatter->init(&splatterFrames, responseAudio);
 		actionResponses.push_back( splatter );
-		splatter->init(splatterFrames, responseAudio);
-	}
+	//}
 }

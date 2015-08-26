@@ -17,9 +17,10 @@ class ActionResponseController {
 
 class BloodSplatterController: public ActionResponseController {
 	std::string splatterFiles;
-	vector<ofImage> splatterFrames;
 
 	public:
+		vector<ofImage> splatterFrames;
+
 		void newResponse();
 		void init();
 };

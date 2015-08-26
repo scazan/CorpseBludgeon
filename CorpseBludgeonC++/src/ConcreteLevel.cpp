@@ -20,13 +20,15 @@ void ConcreteLevel::draw(int currentFrame) {
 		firstDraw = false;
 	}
 
-	//tint(bgColor[0],bgColor[1],bgColor[2], 255);
+	ofSetColor(bgColor[0],bgColor[1],bgColor[2], 255);
 	bgImage.draw( 0, 0, ofGetViewportWidth(), ofGetViewportHeight() );
 
+	ofSetColor(255, 255, 255, 255);
+
 	if(currentFrame % strobeFrameRate == 0) {
-		//bgColor[0] = (int)random(150);
-		//bgColor[1] = (int)random(255);
-		//bgColor[2] = (int)random(255);
+		bgColor[0] = (int)rand() % 150;
+		bgColor[1] = (int)rand() % 255;
+		bgColor[2] = (int)rand() % 255;
 	}
 
 	splatterController.draw();
@@ -35,9 +37,8 @@ void ConcreteLevel::draw(int currentFrame) {
   }
 
 int ConcreteLevel::triggerAction(int numHits) {
-	//splatterController.newResponse();
+	splatterController.newResponse();
 	//comboController.newResponse(numHits) ;
-	cout << "hit" << '\n';
 	return numHitsThisLevel;
 }
 

@@ -1,7 +1,5 @@
 #include "AudioCollection.h"
 
-AudioCollection::~AudioCollection() {
-}
 
 void AudioCollection::init(std::vector<std::string> sampleVector, bool looping) {
 
@@ -29,4 +27,6 @@ void AudioCollection::destroy() {
 		samples[i]->stop();
 		samples[i]->unloadSound();
 	}
+}
+AudioCollection::~AudioCollection() {
 }

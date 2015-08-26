@@ -15,11 +15,13 @@ class ActionResponse {
 };
 
 class BloodSplatter: public ActionResponse {
-	vector<ofImage> splatterFrames;
+	vector<ofImage> *splatterFrames;
 	int randomFrame = 0;
 	int squareSize = 100;
+	ofImage *splatterImage;
 
 	public:
-		void init(vector<ofImage> frames, AudioCollection *responseAudio);
+		~BloodSplatter();
+		void init(vector<ofImage> *frames, AudioCollection *responseAudio);
 		void draw();
 };
