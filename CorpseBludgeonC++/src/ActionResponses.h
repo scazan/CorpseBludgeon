@@ -1,6 +1,7 @@
 #include "AudioCollection.h"
 #include <vector>
 #include <ofImage.h>
+#include <ofTrueTypeFont.h>
 
 class ActionResponse {
 	public:
@@ -27,7 +28,7 @@ class BloodSplatter: public ActionResponse {
 };
 
 class ComboBreaker: public ActionResponse {
-	//PFont font;
+	ofTrueTypeFont font;
 	int comboNumber;
 
 	public:

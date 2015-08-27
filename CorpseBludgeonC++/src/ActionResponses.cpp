@@ -42,25 +42,6 @@ void BloodSplatter::draw() {
 
 		ofDisableAlphaBlending();
 
-		//unsigned char * pix = splatterImage->getPixels();
-		//int numPix = splatterImage->width * splatterImage->height * 4;
-
-		//for(int i = 0; i <numPix;  i+=4){
-			//pix[i] = pix[i] - brightness;
-			//pix[i+1] = pix[i+1] - brightness;
-			//pix[i+2] = pix[i+2] - brightness;
-			//pix[i+3] = ((fadeValue/fadeDuration) *255);
-		//}
-		//splatterImage->update();
-
-		//splatterImage->draw( xPos, yPos, squareSize, squareSize);
-
-		//for(int i = 0; i <numPix;  i+=4){
-			//pix[i] = pix[i] + brightness;
-			//pix[i+1] = pix[i+1] + brightness;
-			//pix[i+2] = pix[i+2] + brightness;
-		//}
-
 		fadeValue--;
 	}
 	else {
@@ -81,15 +62,16 @@ void ComboBreaker::init(int numHits, AudioCollection *responseAudio) {
 	fadeDuration = 25.f;
 	fadeValue = fadeDuration;
 
-    comboNumber = numHits;
-    //font = loadFont("Cracked-64.vlw"); 
-    //textFont(font); 
+	comboNumber = numHits;
+	// TODO: Temporary font until I find new version of Cracked-64
+	font.loadFont("digitaldreamnarrow.ttf", 64, true, false, true);
 
 	responseAudio->play(0,false);
 }
 
 void ComboBreaker::draw() {
-	std::string message = comboNumber + " IN A ROW!!!";
+	std::string s_comboNumber = static_cast<ostringstream*>( &(ostringstream() << comboNumber) )->str();
+	std::string message = s_comboNumber + " IN A ROW!!!";
 
 	if(comboNumber > 3) {
 		message += '\n';
@@ -122,12 +104,15 @@ void ComboBreaker::draw() {
 	if(fadeValue > 0) {
 		ofImage backImage;
 		backImage.loadImage("psycho2.png");
+
+		ofEnableAlphaBlending();
 		ofSetColor(comboNumber * 50 %255, (int)rand() % 200, comboNumber * 25, ((fadeValue/fadeDuration) *200) );
 		backImage.draw(xPos+50, yPos-50);
-		ofSetColor(255,255);
-		//fill(comboNumber * 50 %255, random(0,200), comboNumber * 25, ((fadeValue/fadeDuration) *255) );
-		//textLeading(50);
+		font.setLineHeight(50);
+		ofSetColor(comboNumber * 50 %255, (int)rand() % 200, comboNumber * 25, ((fadeValue/fadeDuration) *255) );
+		font.drawStringAsShapes(message, xPos, yPos);
 
+		ofSetColor(255,255);
 		fadeValue--;
 	}
 	else {

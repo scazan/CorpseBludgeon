@@ -11,7 +11,6 @@ void ConcreteLevel::init() {
 
 	splatterController.init();
 	comboController.init();
-	//comboController = new ComboBreakerController();
 }
 
 void ConcreteLevel::draw(int currentFrame) {

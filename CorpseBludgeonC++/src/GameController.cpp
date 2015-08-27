@@ -20,6 +20,7 @@ GameController::GameController() {
 	timePlayed = 0.0;
 	largestScore = 0;
 
+	scoreFont.loadFont("digitaldreamnarrow.ttf", 64, true, false, true);
 	//scoreFont.loadFont("Cracked-64.ttf");
 
 	mainMenu = new MainMenu();
@@ -89,41 +90,43 @@ void GameController::draw() {
 			}
 
 			//// Display score
-			//string scoreText = "";
-			//textFont(scoreFont);
-			//fill(225, 0, 0, 220);
-			//textLeading(50);
-			float scoreScaleJitter = (float)(random() % 100) * 0.05;
-			//scale(1.5 + scoreScaleJitter);
+			std::string scoreText = "";
+			ofSetColor(225, 0, 0, 220);
+			scoreFont.setLineHeight(50);
+			float scoreScaleJitter = ((float)(random() % 100))/100 * 0.05;
+			ofScale(1.5 + scoreScaleJitter, 1.5 + scoreScaleJitter);
 
 			int numExclamations = std::floor( (score/1050) )  * 2;
 
 			for(int i=1; i<=numExclamations; i++) {
-				//text("|", 10 + (i*15), 50);
+				scoreFont.drawStringAsShapes("|", 10 + (i*15), 50);
 			}
 
-			//fill(100,0,255,220);
+			ofSetColor(100,0,255,220);
 			numExclamations = std::floor((largestScore/1050)) * 2;
-			//text("|", 10 + (numExclamations*15), 50);
+			scoreFont.drawStringAsShapes("|", 10 + (numExclamations*15), 50);
 
 			largestScore = score > largestScore ? score : largestScore;
 			//textAlign(LEFT);
-			//text(largestScore, 30 + (numExclamations*15), 50 + scoreScaleJitter);
+			std::string s_largestScore = static_cast<ostringstream*>( &(ostringstream() << largestScore) )->str();
+			scoreFont.drawStringAsShapes(s_largestScore, 30 + (numExclamations*15), 50 + scoreScaleJitter);
 
-			//scale(1/(1.5+scoreScaleJitter));
+			ofScale(1/(1.5+scoreScaleJitter), 1/(1.5+scoreScaleJitter));
 
-			//fill(255, 0, 0, 220);
+			ofSetColor(255, 0, 0, 220);
 
 			float timeMillis = ofGetElapsedTimef();
 
 			//// TIME DISPLAY
-			//timePlayed = (timeMillis - timeStarted) / 1000.0;
+			timePlayed = (timeMillis - timeStarted) / 1000.0;
 
 			//// CONVERT TO A TIME FORMAT
 			//Date date = new Date((timeMillis - timeStarted));
 			//DateFormat formatter = new SimpleDateFormat("mm:ss:SSS");
 			//String twoPlaces = formatter.format(date);
 
+			//scoreFont.drawString(twoPlaces, 35, 125);
+			scoreFont.drawStringAsShapes(static_cast<ostringstream*>( &(ostringstream() << timePlayed) )->str(), 35, 125);
 			//text(twoPlaces, 35, 125);
 
 		}
@@ -133,9 +136,9 @@ void GameController::draw() {
 
 			try {
 
-				//levels[currentLevel].destroy();
+				levels[currentLevel].destroy();
 
-				//for(int i=0; i<levels.length; i++) {
+				//for(unsigned int i=0; i<levels.size(); i++) {
 					//levels[i].destroy();
 				//}
 
@@ -174,6 +177,7 @@ void GameController::triggerAction(int numHits) {
 		timeStarted = ofGetElapsedTimef();
 	}
 	else if(currentLevel <= levels.size()-1 && !gameOverMenuActive && !mainMenuActive) {
+		numHits += 2;
 		score += scorePerLevel / levels[currentLevel]->triggerAction(numHits);
 	}
 
