@@ -1,6 +1,43 @@
 #include "ofApp.h"
 #include "ActionResponses.h"
 
+void Sprite::init(ofImage *passedSprite, int spriteSize, int spriteFrames) {
+	int width = ofGetScreenWidth(),
+		height = ofGetScreenHeight();
+
+	xPos = (int)rand() % width;
+	yPos = (int)rand() % height;
+	fadeDuration = 50;
+	fadeValue = fadeDuration;
+	squareSize = spriteSize;
+	numFrames = spriteFrames;
+
+	sprite = passedSprite;
+	brightness = ((int)rand() % (255-150)) + 150;
+	imageScale = ((int)rand() % (3-1)) + 1;
+}
+
+void Sprite::draw() {
+	//ofImage imageFrame;
+	//sprite->drawSubSection(Math.round(currentFrame) * (squareSize - 1), 0, squareSize -1, squareSize-1);
+
+	if(fadeValue > 0) {
+		ofSetColor(brightness, brightness, brightness, ((fadeValue/fadeDuration) *255));
+		ofScale(imageScale, imageScale);
+
+		sprite->drawSubsection(xPos, yPos, squareSize-1, squareSize-1, currentFrame * (squareSize - 1), 0);
+
+		ofScale(1/imageScale, 1/imageScale);
+
+		fadeValue--;
+	}
+	else {
+		display = false;
+	}
+
+	currentFrame = (int)(currentFrame + speed) % (numFrames - 1);
+}
+
 void BloodSplatter::init(vector<ofImage> *frames, AudioCollection *responseAudio) {
 	// TODO: Constrain this properly to window
 	int width = ofGetScreenWidth(),

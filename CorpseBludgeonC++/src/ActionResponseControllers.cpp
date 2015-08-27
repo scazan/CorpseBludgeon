@@ -21,6 +21,18 @@ void ActionResponseController::draw() {
 	}
 }
 
+void SpriteController::init() {
+	sprite.loadImage("sprites/" + spriteFileName);
+}
+
+void SpriteController::newResponse(int numHits) {
+	//for(int i=0; i<3; i++){
+		Sprite newSprite;
+		cout << numFrames << '\n';
+		//newSprite.init(sprite, this->squareSize, this->numFrames);
+		//actionResponses.push_back( &newSprite );
+	//}
+}
 
 void BloodSplatterController::init() {
 	vector<string> sampleFiles;

@@ -1,3 +1,6 @@
+#ifndef ACTIONRESPONSE_H
+#define ACTIONRESPONSE_H
+
 #include "AudioCollection.h"
 #include <vector>
 #include <ofImage.h>
@@ -13,6 +16,21 @@ class ActionResponse {
 		bool display = true;
 
 		virtual void draw() = 0;
+};
+
+class Sprite: public ActionResponse {
+	public:
+		ofImage *sprite;
+		int randomFrame = 0;
+		int squareSize = 100;
+		int numFrames = 4;
+		int currentFrame = 1;
+		float speed = 0.25;
+		float imageScale = 1;
+
+		void init(ofImage *passedSprite, int spriteSize, int spriteFrames);
+		void draw();
+
 };
 
 class BloodSplatter: public ActionResponse {
@@ -36,3 +54,5 @@ class ComboBreaker: public ActionResponse {
 		void init(int numHits, AudioCollection *responseAudio);
 		void draw();
 };
+
+#endif

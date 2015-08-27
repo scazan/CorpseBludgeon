@@ -1,5 +1,6 @@
 #include "GameController.h"
 #include "ConcreteLevel.h"
+#include "SkullLevel.h"
 
 #include <iostream>
 #include <math.h>
@@ -29,7 +30,7 @@ GameController::GameController() {
 	std::vector<Level *> levelOrder;
 
 	levelOrder.push_back(new ConcreteLevel() );
-    //levelOrder.push_back(new SkullLevel(controller) );
+	levelOrder.push_back(new SkullLevel() );
     //levelOrder.push_back(new WiresLevel(controller) );
     //levelOrder.push_back(new GlitchLevel(controller) );
 
@@ -53,7 +54,7 @@ GameController::GameController() {
 
     ////default opening level and the next level initialized or fast loading
 	levels.at(0)->init();
-	//levels.at(1)->init();
+	levels.at(1)->init();
 
     timeStarted = ofGetElapsedTimef();
 }
@@ -136,7 +137,7 @@ void GameController::draw() {
 
 			try {
 
-				levels[currentLevel].destroy();
+				//levels[currentLevel].destroy();
 
 				//for(unsigned int i=0; i<levels.size(); i++) {
 					//levels[i].destroy();
