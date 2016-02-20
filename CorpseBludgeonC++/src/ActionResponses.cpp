@@ -20,6 +20,7 @@ void Sprite::init(ofImage *passedSprite, int spriteSize, int spriteFrames) {
 void Sprite::draw() {
 	//ofImage imageFrame;
 	//sprite->drawSubSection(Math.round(currentFrame) * (squareSize - 1), 0, squareSize -1, squareSize-1);
+	cout << "Sprite" << '\n';
 
 	if(fadeValue > 0) {
 		ofSetColor(brightness, brightness, brightness, ((fadeValue/fadeDuration) *255));

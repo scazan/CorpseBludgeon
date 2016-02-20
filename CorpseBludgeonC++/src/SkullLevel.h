@@ -24,6 +24,8 @@ class SkullLevel : public Level {
 
 	BloodSplatterController splatterController;
 	ComboBreakerController comboController;
+	std::vector<SpriteController *> spriteControllers;
+	SpiderSpriteController spiderController;
 	//SpriteController[] spriteControllers = new SpriteController[2];
 	AudioCollection backgroundMusic;
 	vector<std::string> musicFiles;

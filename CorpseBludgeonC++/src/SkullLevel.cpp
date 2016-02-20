@@ -16,7 +16,8 @@ void SkullLevel::init() {
 
 	splatterController.init();
 	comboController.init();
-	spriteControllers[0] = new SpiderSpriteController();
+	spiderController.init();
+	spriteControllers.push_back( &spiderController );
 	//spriteControllers[1] = new FlashingSkullSpriteController();
 }
 
@@ -42,9 +43,9 @@ void SkullLevel::draw(int currentFrame) {
 	splatterController.draw();
 	comboController.draw();
 
-	//for(int i=0; i<spriteControllers.length; i++) {
-		//spriteControllers[i].draw();
-	//}
+	for(unsigned int i=0; i<spriteControllers.size() - 1; i++) {
+		spriteControllers[i]->draw();
+	}
 
 	bgScrollOffset = bgScrollOffset - bgScrollSpeed;
 	if(bgScrollOffset <= (bgImage[imageToShow]->width * - 1)) {
@@ -56,6 +57,11 @@ void SkullLevel::draw(int currentFrame) {
 int SkullLevel::triggerAction(int numHits) {
 	splatterController.newResponse(numHits);
 	comboController.newResponse(numHits) ;
+    //score += (gameController.scorePerLevel / numHitsThisLevel);
+
+	for(unsigned int i=0; i<spriteControllers.size(); i++) {
+	  spriteControllers[i]->newResponse(numHits);
+	}
 
 	return numHitsThisLevel;
 }

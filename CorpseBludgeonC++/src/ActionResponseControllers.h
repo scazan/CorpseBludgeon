@@ -51,6 +51,8 @@ class SpiderSpriteController: public SpriteController {
 		std::string spriteFileName = "spider.png";
 		int squareSize = 40;
 		int numFrames = 3;
+
+		void init();
 };
 
 #endif

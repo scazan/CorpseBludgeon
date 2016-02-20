@@ -24,6 +24,7 @@ GameController::GameController() {
 	scoreFont.loadFont("digitaldreamnarrow.ttf", 64, true, false, true);
 	//scoreFont.loadFont("Cracked-64.ttf");
 
+
 	mainMenu = new MainMenu();
 	gameOver = new GameOver();
 
